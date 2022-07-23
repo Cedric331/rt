@@ -15,7 +15,8 @@ return new class extends Migration
     {
         Schema::create('structures', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->index()->unique();
+            $table->string('name');
+            $table->unique(['name', 'parent_id']);
             $table->foreignId('parent_id')->nullable()->constrained('structures');
             $table->json('childrens')->nullable();
             $table->timestamps();
