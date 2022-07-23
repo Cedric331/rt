@@ -19,41 +19,45 @@ import NavBar from "@/Components/NavBar.vue";
                 <div class="bg-white overflow-hidden shadow-sm block">
                     <div class="h-max bg-slate-800">
                         <div class="transition ease-in-out delay-4000 min-h-screen w-[3.35rem] overflow-hidden hover:w-56 hover:shadow-lg">
-                            <div class="flex h-screen flex-col justify-between pt-2 pb-6">
-                                <div>
-                                    <div class="w-max p-2.5">
+                            <div class="flex h-screen flex-col justify-between pt-2">
+                                <div class="h-3/6">
+                                    <div class="w-max p-2.5 mb-4">
                                         <img src="https://tailus.io/images/logo.svg" class="w-32" alt="">
                                     </div>
-                                    <ul class="mt-6 space-y-2 tracking-wide">
-                                        <li v-for="structure in this.structures" class="min-w-max">
-                                            <button @click="scrollStructure(structure)" class="relative w-full flex items-center rounded-full space-x-5 hover:bg-gradient-to-r from-sky-600 to-cyan-400 px-4 py-3 text-white">
+                                    <div class="overflow-y-auto overflow-x-hidden h-[22.2rem]">
+                                        <ul class=" space-y-2 tracking-wide">
+                                            <li v-for="structure in this.structures" class="min-w-max">
+                                                <button @click="scrollStructure(structure)" class="relative w-full flex items-center rounded-full space-x-5 hover:bg-gradient-to-r from-sky-600 to-cyan-400 px-4 py-3 text-white">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                                        <path class="fill-current text-cyan-200 group-hover:text-cyan-300" fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 1.414L10.586 9H7a1 1 0 100 2h3.586l-1.293 1.293a1 1 0 101.414 1.414l3-3a1 1 0 000-1.414z" clip-rule="evenodd" />
+                                                    </svg>
+                                                    <span class="-mr-1 font-medium">{{ structure.name }}</span>
+                                                </button>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div>
+                                    <ul class=" tracking-wide">
+                                        <hr class="bg-white">
+                                        <li class="min-w-max" v-if="this.parent_id !== null">
+                                            <button @click="reset()" class="relative w-full flex items-center rounded-full space-x-5 hover:bg-gradient-to-r from-sky-600 to-cyan-400 px-4 py-3 text-white">
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                                                     <path class="fill-current text-cyan-200 group-hover:text-cyan-300" fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 1.414L10.586 9H7a1 1 0 100 2h3.586l-1.293 1.293a1 1 0 101.414 1.414l3-3a1 1 0 000-1.414z" clip-rule="evenodd" />
                                                 </svg>
-                                                <span class="-mr-1 font-medium">{{ structure.name }}</span>
+                                                <span class="-mr-1 font-medium">Revenir au début</span>
+                                            </button>
+                                        </li>
+                                        <li class="min-w-max">
+                                            <button @click="addStructure()" class="relative w-full flex items-center rounded-full space-x-5 hover:bg-gradient-to-r from-sky-600 to-cyan-400 px-4 py-3 text-white">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                                    <path class="fill-current text-cyan-200 group-hover:text-cyan-300" fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 1.414L10.586 9H7a1 1 0 100 2h3.586l-1.293 1.293a1 1 0 101.414 1.414l3-3a1 1 0 000-1.414z" clip-rule="evenodd" />
+                                                </svg>
+                                                <span class="-mr-1 font-medium">Ajouter structure</span>
                                             </button>
                                         </li>
                                     </ul>
                                 </div>
-                                <ul class="space-y-2 tracking-wide">
-                                    <hr class="bg-white">
-                                    <li class="min-w-max">
-                                    <button @click="addStructure()" class="relative w-full flex items-center rounded-full space-x-5 hover:bg-gradient-to-r from-sky-600 to-cyan-400 px-4 py-3 text-white">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                            <path class="fill-current text-cyan-200 group-hover:text-cyan-300" fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 1.414L10.586 9H7a1 1 0 100 2h3.586l-1.293 1.293a1 1 0 101.414 1.414l3-3a1 1 0 000-1.414z" clip-rule="evenodd" />
-                                        </svg>
-                                        <span class="-mr-1 font-medium">Ajouter structure</span>
-                                    </button>
-                                    </li>
-                                    <li class="min-w-max" v-if="this.structures !== this.$page.props.structures">
-                                        <button @click="reset()" class="relative w-full flex items-center rounded-full space-x-5 hover:bg-gradient-to-r from-sky-600 to-cyan-400 px-4 py-3 text-white">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                                <path class="fill-current text-cyan-200 group-hover:text-cyan-300" fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 1.414L10.586 9H7a1 1 0 100 2h3.586l-1.293 1.293a1 1 0 101.414 1.414l3-3a1 1 0 000-1.414z" clip-rule="evenodd" />
-                                            </svg>
-                                            <span class="-mr-1 font-medium">Reset</span>
-                                        </button>
-                                    </li>
-                                </ul>
 
                                 <div class="w-full hover:bg-gradient-to-r from-sky-600 to-cyan-400">
                                     <div class="w-max group flex items-center space-x-4 rounded-md px-4 py-3 text-white">
@@ -102,8 +106,13 @@ export default {
         },
         reset () {
             this.parent_id = null
-            Inertia.reload({ only: ['structures'] })
-            this.structures = this.$page.props.structures
+            axios.get('structure')
+                .then(response => {
+                    this.structures = response.data
+                })
+                .catch(error => {
+                    console.log(error)
+                })
         },
         scrollStructure (data) {
             this.parent_id = data.id

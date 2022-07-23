@@ -7,7 +7,18 @@ use Illuminate\Http\Request;
 
 class StructureController extends Controller
 {
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function index (): \Illuminate\Http\JsonResponse
+    {
+        return response()->json(Structure::where('parent_id', null)->get());
+    }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function store (Request $request)
     {
         if ($request->parent) {
