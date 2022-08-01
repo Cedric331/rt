@@ -1,6 +1,6 @@
 <template>
     <!-- component -->
-    <nav class="bg-slate-800 w-full flex justify-between items-center mx-auto px-8 h-20">
+    <nav class="bg-slate-800 w-full flex justify-between items-center mx-auto px-8 h-16">
 
         <!-- end logo -->
 

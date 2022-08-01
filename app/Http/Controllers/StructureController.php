@@ -19,7 +19,7 @@ class StructureController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store (Request $request)
+    public function store (Request $request): \Illuminate\Http\JsonResponse
     {
         if ($request->parent) {
             $structure = Structure::find($request->parent);
@@ -27,9 +27,8 @@ class StructureController extends Controller
             $array = [];
             $childrens = json_decode($structure->childrens);
 
-            $rand = rand(1,999);
             $store = Structure::create([
-                'name' => 'Test'.$rand,
+                'name' => $request->element,
                 'parent_id' => json_encode($structure->id),
             ]);
 
@@ -43,7 +42,7 @@ class StructureController extends Controller
             return response()->json(Structure::findMany(json_decode($structure->childrens)));
         } else {
             $store = Structure::create([
-                'name' => 'Test'
+                'name' => $request->element
             ]);
 
             $structures = $request->structures;
