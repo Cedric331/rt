@@ -60,6 +60,24 @@ class StructureController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
+    public function update (Request $request): \Illuminate\Http\JsonResponse
+    {
+        $structure = Structure::find($request->structure['id']);
+        $structure->name = $request->element;
+        $structure->save();
+
+        return response()->json($structure);
+    }
+
+    public function delete (Request $request)
+    {
+        dd($request->structure);
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function check (Request $request): \Illuminate\Http\JsonResponse
     {
         $structures = Structure::find($request->id);

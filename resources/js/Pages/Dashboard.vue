@@ -12,7 +12,7 @@
 
             <NavBarL></NavBarL>
 
-                <section class="max-w-9xl mx-auto px-4 sm:px-6 lg:px-4 py-12 fixed left-72">
+                <section class="max-w-9xl mx-auto px-4 sm:px-6 lg:px-4 py-12 absolute left-64">
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         <div
                             class="w-full bg-gray-900 rounded-lg sahdow-lg p-12 flex flex-col justify-center items-center"
@@ -99,7 +99,6 @@ import { Head } from '@inertiajs/inertia-vue3';
 import NavBar from "@/Components/NavBar.vue";
 import NavBarL from "@/Components/NavBarL.vue";
 
-
 export default {
     components: {
         BreezeAuthenticatedLayout,
@@ -113,7 +112,6 @@ export default {
         }
     },
     methods: {
-
     },
 }
 </script>

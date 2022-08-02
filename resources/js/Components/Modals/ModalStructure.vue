@@ -30,9 +30,16 @@
                     </div>
                 </div>
                 <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse justify-between">
-                    <button @click="addStructure()" type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm">
-                        Enregistrer
-                    </button>
+                    <div v-if="this.edit">
+                        <button @click="updateStructure()" type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm">
+                            Modifier
+                        </button>
+                    </div>
+                    <div v-else>
+                        <button @click="addStructure()" type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm">
+                            Enregistrer
+                        </button>
+                    </div>
                     <button @click="this.$emit('closeConfirm')" type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-red-500 text-base font-medium text-white hover:bg-red-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
                         Annuler
                     </button>
@@ -45,6 +52,10 @@
 <script>
 export default {
     name: "ModalStructure",
+    props: {
+      edit: Boolean,
+      name: String
+    },
     data () {
         return {
             element: null
@@ -58,6 +69,14 @@ export default {
         addStructure () {
             this.$emit('saveStructure', this.element)
         },
+        updateStructure () {
+            this.$emit('updateStructure', this.element)
+        }
+    },
+    mounted() {
+        if (this.edit) {
+            this.element = this.name
+        }
     }
 }
 </script>

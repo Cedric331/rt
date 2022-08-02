@@ -11,7 +11,7 @@ const showingNavigationDropdown = ref(false);
 
 <template>
     <div>
-        <div class="min-h-screen bg-fixed bg-gradient-to-r from-slate-900 via-cyan-800 to-slate-900 flex flex-col">
+        <div class="min-h-screen  flex flex-col">
 
             <!-- Page Heading -->
             <header class="shadow flex-1" v-if="$slots.header">
