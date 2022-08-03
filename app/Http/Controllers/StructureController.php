@@ -69,9 +69,59 @@ class StructureController extends Controller
         return response()->json($structure);
     }
 
-    public function delete (Request $request)
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function delete (Request $request): \Illuminate\Http\JsonResponse
     {
-        dd($request->structure);
+        if (key_exists('childrens', $request->structure) && $request->structure['childrens']) {
+            $childrens = json_decode($request->structure['childrens']);
+            foreach ($childrens as $children) {
+                $this->deleteChildrens($children);
+            }
+        }
+        if (key_exists('parent_id', $request->structure) && $request->structure['parent_id']) {
+            $this->deleteParent($request->structure['id'], $request->structure['parent_id']);
+        }
+
+        $structure = Structure::find($request->structure['id']);
+        $structure->delete();
+
+        return response()->json(true);
+    }
+
+    private function deleteParent ($id, $parent_id): void
+    {
+        $parent = Structure::find($parent_id);
+        $childrens = json_decode($parent->childrens);
+        if (($key = array_search($id, $childrens)) !== false) {
+            unset($childrens[$key]);
+        }
+        $array = [];
+        foreach ($childrens as $children) {
+            array_push($array, $children);
+        }
+        $parent->childrens = json_encode($array);
+        $parent->save();
+    }
+
+    private function deleteChildrens ($children): void
+    {
+            if ($children) {
+                $child = Structure::find($children);
+                if ($child) {
+                    if (!is_null($child->childrens)) {
+                        foreach (json_decode($child->childrens) as $childs) {
+                            $this->deleteChildrens($childs);
+                        }
+                    }
+                    if ($child->parent_id) {
+                        $this->deleteParent($child->id, $child->parent_id);
+                    }
+                    $child->delete();
+                }
+            }
     }
 
     /**
