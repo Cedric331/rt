@@ -124,6 +124,21 @@ class StructureController extends Controller
             }
     }
 
+    public function indexBack (Request $request)
+    {
+        $parent = Structure::find($request->parent)->parent_id;
+        $parent_id = null;
+
+        if ($parent) {
+            $childrens = Structure::find($parent)->childrens;
+            $parent_id = Structure::findMany(json_decode($childrens))->first()->parent_id;
+            return response()->json(['structures' => Structure::findMany(json_decode($childrens)), 'parent_id' => $parent_id]);
+
+        } else {
+            return response()->json(['structures' => Structure::where('parent_id', null)->get(), 'parent_id' => $parent_id]);
+        }
+    }
+
     /**
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
