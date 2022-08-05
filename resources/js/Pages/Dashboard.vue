@@ -87,7 +87,16 @@
                         </div>
                     </div>
                 </section>
+            <div class="flex mr-4 items-center fixed bottom-3 right-3">
+                <button @click="openModal = true" aria-label="dashboard" class="focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 mx-auto transition duration-150 ease-in-out hover:bg-indigo-600 bg-indigo-700 rounded text-white px-4 sm:px-8 py-2 text-xs sm:text-sm relative flex items-center rounded-full space-x-5 hover:bg-gradient-to-r from-sky-600 to-cyan-400 px-4 py-3 text-white">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path class="fill-current text-cyan-200 group-hover:text-cyan-300" fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd" />
+                    </svg>
+                    <span class="-mr-1 font-medium">Ajouter une RT</span>
+                </button>
+            </div>
         </div>
+        <ModalCreateResponse v-if="openModal" />
     </BreezeAuthenticatedLayout>
 </template>
 
@@ -98,9 +107,11 @@ import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
 import { Head } from '@inertiajs/inertia-vue3';
 import NavBar from "@/Components/NavBar.vue";
 import NavBarL from "@/Components/NavBarL.vue";
+import ModalCreateResponse from "@/Components/Modals/ModalCreateResponse.vue";
 
 export default {
     components: {
+        ModalCreateResponse,
         BreezeAuthenticatedLayout,
         NavBarL,
         NavBar,
@@ -108,7 +119,7 @@ export default {
     },
     data () {
         return {
-            //
+            openModal: false
         }
     },
     methods: {

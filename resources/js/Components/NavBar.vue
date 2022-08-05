@@ -44,14 +44,6 @@
         <div class="flex-initial">
             <div class="flex justify-end items-center relative">
 
-                <div class="flex mr-4 items-center">
-                    <a href="#" aria-label="dashboard" class="relative flex items-center rounded-full space-x-5 hover:bg-gradient-to-r from-sky-600 to-cyan-400 px-4 py-3 text-white">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                            <path class="fill-current text-cyan-200 group-hover:text-cyan-300" fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd" />
-                        </svg>
-                        <span class="-mr-1 font-medium">Ajouter une RT</span>
-                    </a>
-                </div>
 
                 <div class="block">
                     <div class="inline relative">
