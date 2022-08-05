@@ -10,7 +10,7 @@
 
         <div class="-order-1 flex max-h-[54rem] relative">
 
-            <NavBarL></NavBarL>
+            <NavBarL @parent="(data) => this.parent_id = data"></NavBarL>
 
                 <section class="max-w-9xl mx-auto px-4 sm:px-6 lg:px-4 py-12 absolute left-64">
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -96,7 +96,11 @@
                 </button>
             </div>
         </div>
-        <ModalCreateResponse v-if="openModal" />
+        <ModalCreateResponse
+            v-if="openModal"
+            :parent_id = "this.parent_id"
+            @closeConfirm="this.openModal = false"
+        />
     </BreezeAuthenticatedLayout>
 </template>
 
@@ -119,7 +123,8 @@ export default {
     },
     data () {
         return {
-            openModal: false
+            openModal: false,
+            parent_id: null
         }
     },
     methods: {

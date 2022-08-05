@@ -17,6 +17,11 @@ class ResponseType extends Model
     protected $fillable = [
         'titre',
         'contenu',
-        'response_type_id'
+        'structure_id'
     ];
+
+    public function tags ()
+    {
+        return $this->belongsToMany(Tag::class, 'response_type_tags');
+    }
 }

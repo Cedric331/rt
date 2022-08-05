@@ -110,103 +110,109 @@
             openDel: false,
             edit: false
         }
-},
-    methods: {
-    editStructure (structure) {
-        this.structure = structure
-        this.edit = true
-        this.openModal = true
     },
-    openConfirm (data) {
-        this.delStructure = data
-        this.openDel = true
-    },
-    deleteStructure () {
-        axios.delete('structure/delete', {
-            data: {
-                structure: this.delStructure
+        watch: {
+            // whenever question changes, this function will run
+            parent_id() {
+               this.$emit('parent', this.parent_id);
             }
-        })
-        .then(() => {
-            this.structures.forEach((element, index) => {
-                if (element.id === this.delStructure.id) {
-                    this.structures.splice(index, 1)
+        },
+    methods: {
+        editStructure (structure) {
+            this.structure = structure
+            this.edit = true
+            this.openModal = true
+        },
+        openConfirm (data) {
+            this.delStructure = data
+            this.openDel = true
+        },
+        deleteStructure () {
+            axios.delete('structure/delete', {
+                data: {
+                    structure: this.delStructure
                 }
             })
-            this.delStructure = null
-            this.openDel = false
-        })
-        .catch(error => {
-            console.log(error)
-        })
-    },
-    updateStructure (data) {
-        this.openModal = false
-        this.edit = false
-        axios.patch('structure/update', {
-            structure: this.structure,
-            element: data
-        })
-            .then(response => {
+            .then(() => {
                 this.structures.forEach((element, index) => {
-                    if (element.id === response.data.id) {
-                        this.structures[index] = response.data
+                    if (element.id === this.delStructure.id) {
+                        this.structures.splice(index, 1)
                     }
                 })
+                this.delStructure = null
+                this.openDel = false
             })
             .catch(error => {
                 console.log(error)
             })
-    },
-    saveStructure (data) {
-        this.edit = false
-        axios.post('structure/add', {
-            structures: this.structures,
-            element: data,
-            parent: this.parent_id
-        })
-            .then(response => {
-            this.structures = response.data
+        },
+        updateStructure (data) {
             this.openModal = false
-        })
-            .catch(error => {
-            console.log(error)
-        })
-    },
-    retour () {
-        axios.post('structure', {
-            parent: this.parent_id
-        })
-            .then(response => {
-                this.structures = response.data.structures
-                this.parent_id = response.data.parent_id
+            this.edit = false
+            axios.patch('structure/update', {
+                structure: this.structure,
+                element: data
             })
-            .catch(error => {
+                .then(response => {
+                    this.structures.forEach((element, index) => {
+                        if (element.id === response.data.id) {
+                            this.structures[index] = response.data
+                        }
+                    })
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+        },
+        saveStructure (data) {
+            this.edit = false
+            axios.post('structure/add', {
+                structures: this.structures,
+                element: data,
+                parent: this.parent_id
+            })
+                .then(response => {
+                this.structures = response.data
+                this.openModal = false
+            })
+                .catch(error => {
                 console.log(error)
             })
-    },
-    reset () {
-        this.parent_id = null
-        axios.get('structure')
+        },
+        retour () {
+            axios.post('structure', {
+                parent: this.parent_id
+            })
+                .then(response => {
+                    this.structures = response.data.structures
+                    this.parent_id = response.data.parent_id
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+        },
+        reset () {
+            this.parent_id = null
+            axios.get('structure')
+                .then(response => {
+                this.structures = response.data
+            })
+                .catch(error => {
+                console.log(error)
+            })
+        },
+        scrollStructure (data) {
+            this.parent_id = data.id
+            axios.post('structure/check', {
+            id: data.id
+        })
             .then(response => {
             this.structures = response.data
         })
             .catch(error => {
             console.log(error)
         })
-    },
-    scrollStructure (data) {
-        this.parent_id = data.id
-        axios.post('structure/check', {
-        id: data.id
-    })
-        .then(response => {
-        this.structures = response.data
-    })
-        .catch(error => {
-        console.log(error)
-    })
-}
+    }
 },
 mounted () {
     this.structures = this.$page.props.structures

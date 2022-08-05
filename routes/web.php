@@ -21,3 +21,4 @@ Route::get('/dashboard', function () {
 
 require __DIR__.'/auth.php';
 require __DIR__.'/structure.php';
+require __DIR__.'/response_type.php';

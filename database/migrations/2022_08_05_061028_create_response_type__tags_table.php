@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('response_type__tags', function (Blueprint $table) {
+        Schema::create('response_type_tags', function (Blueprint $table) {
             $table->id();
             $table->foreignId('response_type_id');
             $table->foreignId('tag_id');
