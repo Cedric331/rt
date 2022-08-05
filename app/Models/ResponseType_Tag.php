@@ -15,8 +15,7 @@ class ResponseType_Tag extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
-        'parent_id',
-        'childrens'
+        'response_type_id',
+        'tag_id'
     ];
 }
