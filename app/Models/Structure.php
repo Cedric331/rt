@@ -19,4 +19,9 @@ class Structure extends Model
         'parent_id',
         'childrens'
     ];
+
+    public function responseType ()
+    {
+        return $this->belongsTo(ResponseType::class);
+    }
 }

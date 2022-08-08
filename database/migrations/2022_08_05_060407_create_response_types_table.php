@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('titre');
             $table->longText('contenu');
+            $table->integer('rating')->default(0);
             $table->foreignId('structure_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });

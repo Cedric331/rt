@@ -52,11 +52,11 @@ export default {
                 parent_id: this.parent_id,
                 tags: this.tags
             })
-            .then(() => {
-                this.$emit('closeConfirm')
+            .then(response => {
+                this.$emit('closeConfirm', response.data)
             })
             .catch(error => {
-
+                console.log(error)
             })
         }
     }

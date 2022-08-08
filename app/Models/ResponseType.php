@@ -17,10 +17,11 @@ class ResponseType extends Model
     protected $fillable = [
         'titre',
         'contenu',
+        'rating',
         'structure_id'
     ];
 
-    public function tags ()
+    public function tags (): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(Tag::class, 'response_type_tags');
     }

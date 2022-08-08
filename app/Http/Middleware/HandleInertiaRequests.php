@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\ResponseType;
 use App\Models\Structure;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
@@ -39,6 +40,7 @@ class HandleInertiaRequests extends Middleware
             'auth' => [
                 'user' => $request->user(),
             ],
+            'responseTypes' => ResponseType::orderBy('rating')->get(),
             'structures' => Structure::where('parent_id', null)->get(),
             'ziggy' => function () use ($request) {
                 return array_merge((new Ziggy)->toArray(), [
