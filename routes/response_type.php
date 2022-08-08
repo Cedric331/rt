@@ -5,3 +5,5 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::post('response', [ResponseTypeController::class, 'store']);
+
+Route::patch('response/rating', [ResponseTypeController::class, 'addRating']);

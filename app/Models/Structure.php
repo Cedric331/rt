@@ -20,8 +20,8 @@ class Structure extends Model
         'childrens'
     ];
 
-    public function responseType ()
+    public function responses (): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->belongsTo(ResponseType::class);
+        return $this->hasMany(ResponseType::class, 'structure_id');
     }
 }

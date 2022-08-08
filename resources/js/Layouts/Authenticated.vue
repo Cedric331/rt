@@ -10,6 +10,8 @@ const showingNavigationDropdown = ref(false);
 </script>
 
 <template>
+    <notifications position="bottom right" />
+
     <div>
         <div class="min-h-screen  flex flex-col">
 

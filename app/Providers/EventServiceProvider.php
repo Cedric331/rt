@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\ResponseType;
+use App\Observers\ResponseTypeObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -27,7 +29,8 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        ResponseType::observe(ResponseTypeObserver::class);
+
     }
 
     /**

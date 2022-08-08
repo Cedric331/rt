@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('response_type_tags', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('response_type_id');
-            $table->foreignId('tag_id');
+            $table->foreignId('response_type_id')->constrained()->onDelete('cascade');
+            $table->foreignId('tag_id')->constrained()->onDelete('cascade');
         });
     }
 

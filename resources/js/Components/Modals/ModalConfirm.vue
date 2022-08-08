@@ -10,7 +10,7 @@
                             <div class="mt-2 ">
                                 <div class="flex justify-center">
                                     <p class="text-sm text-gray-500">
-                                       Attention cela supprime les éléments rattachés
+                                       Attention cela supprime les éléments rattachés (RT, Structure)
                                     </p>
                                 </div>
                         </div>

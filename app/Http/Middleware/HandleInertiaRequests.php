@@ -40,7 +40,7 @@ class HandleInertiaRequests extends Middleware
             'auth' => [
                 'user' => $request->user(),
             ],
-            'responseTypes' => ResponseType::orderBy('rating')->get(),
+            'responseTypes' => ResponseType::orderBy('rating', 'DESC')->get(),
             'structures' => Structure::where('parent_id', null)->get(),
             'ziggy' => function () use ($request) {
                 return array_merge((new Ziggy)->toArray(), [

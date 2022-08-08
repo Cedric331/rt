@@ -1,12 +1,12 @@
 <template>
     <div class="bg-white overflow-hidden shadow-sm block">
         <div class="bg-slate-800">
-            <div class="transition ease-in-out delay-4000  w-64 overflow-hidden hover:bg-slate-700 hover:shadow-lg">
+            <div class="transition ease-in-out delay-4000 w-72 overflow-hidden">
                 <div class="flex h-screen flex-col justify-between pt-2">
                     <div class="min-h-[60%] max-h-[60%]">
                         <div class="hover:overflow-y-auto overflow-hidden h-full scroller">
-                            <ul class="space-y-2 tracking-wide w-max-48">
-                                <li v-for="structure in this.structures" class="w-max-48 flex justify-between">
+                            <ul class="space-y-2 tracking-wide">
+                                <li v-for="structure in this.structures" class="flex justify-between">
                                     <button @click="scrollStructure(structure)" class="flex items-center rounded-full hover:bg-gradient-to-r from-sky-600 to-cyan-400 px-4 py-3 text-white">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                                             <path class="fill-current text-cyan-200 group-hover:text-cyan-300" fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 1.414L10.586 9H7a1 1 0 100 2h3.586l-1.293 1.293a1 1 0 101.414 1.414l3-3a1 1 0 000-1.414z" clip-rule="evenodd" />
@@ -186,6 +186,7 @@
                 .then(response => {
                     this.structures = response.data.structures
                     this.parent_id = response.data.parent_id
+                    this.$emit('updateResponse', response.data.responses)
                 })
                 .catch(error => {
                     console.log(error)
@@ -194,10 +195,11 @@
         reset () {
             this.parent_id = null
             axios.get('structure')
-                .then(response => {
+            .then(response => {
                 this.structures = response.data
+                this.$emit('updateResponse', null)
             })
-                .catch(error => {
+            .catch(error => {
                 console.log(error)
             })
         },
@@ -207,7 +209,8 @@
             id: data.id
         })
             .then(response => {
-            this.structures = response.data
+                this.structures = response.data.structures
+                this.$emit('updateResponse', response.data.responses)
         })
             .catch(error => {
             console.log(error)

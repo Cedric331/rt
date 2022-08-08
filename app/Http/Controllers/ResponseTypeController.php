@@ -28,4 +28,18 @@ class ResponseTypeController extends Controller
         }
         return response()->json($response);
     }
+
+    /**
+     * @param Request $request
+     * @return bool
+     */
+    public function addRating (Request $request): bool
+    {
+        $response = ResponseType::find($request->id);
+        $response->rating++;
+        $response->save();
+
+        return true;
+    }
+
 }

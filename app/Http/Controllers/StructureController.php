@@ -124,18 +124,23 @@ class StructureController extends Controller
             }
     }
 
-    public function indexBack (Request $request)
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function indexBack (Request $request): \Illuminate\Http\JsonResponse
     {
         $parent = Structure::find($request->parent)->parent_id;
         $parent_id = null;
 
         if ($parent) {
-            $childrens = Structure::find($parent)->childrens;
+            $structure = Structure::find($parent);
+            $childrens = $structure->childrens;
             $parent_id = Structure::findMany(json_decode($childrens))->first()->parent_id;
-            return response()->json(['structures' => Structure::findMany(json_decode($childrens)), 'parent_id' => $parent_id]);
+            return response()->json(['responses' => $structure->responses ,'structures' => Structure::findMany(json_decode($childrens)), 'parent_id' => $parent_id]);
 
         } else {
-            return response()->json(['structures' => Structure::where('parent_id', null)->get(), 'parent_id' => $parent_id]);
+            return response()->json(['responses' => null,'structures' => Structure::where('parent_id', null)->get(), 'parent_id' => $parent_id]);
         }
     }
 
@@ -145,8 +150,11 @@ class StructureController extends Controller
      */
     public function check (Request $request): \Illuminate\Http\JsonResponse
     {
-        $structures = Structure::find($request->id);
+        $structure = Structure::find($request->id);
 
-        return response()->json(Structure::findMany(json_decode($structures->childrens)));
+        return response()->json([
+            'responses' => $structure->responses,
+            'structures' => Structure::findMany(json_decode($structure->childrens))
+        ]);
     }
 }
