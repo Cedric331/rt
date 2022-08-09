@@ -17,16 +17,32 @@
                     <div class="flex flex-wrap -m-4">
 
                         <div v-for="response in responses" class="p-4 md:w-1/3 h-[25em]">
-                            <div @click="copyText(response)" class="h-full border-2 bg-gray-800 border-gray-20 rounded-lg overflow-y-auto">
-                                <div class="w-full">
-                                    <div class="w-full flex p-2 justify-center">
+                            <div class="h-full border-2 bg-gray-800 border-gray-20 rounded-lg overflow-y-auto">
+                                <div class="w-full flex justify-between">
+                                    <div class="w-full flex p-2">
                                         <div class="pl-2 pt-2">
                                             <h1 class="font-bold text-xl text-center">{{ response.titre }}</h1>
                                         </div>
                                     </div>
+                                    <div class="flex justify-between">
+
+                                        <button @click="updateRt(response)" aria-label="dashboard" class="focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 mx-auto rounded text-white text-xs sm:text-sm relative flex items-center rounded-full space-x-5 hover:bg-gradient-to-r from-sky-600 to-cyan-400 px-4 py-3 text-white">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                                <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
+                                                <path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd" />
+                                            </svg>
+                                        </button>
+
+                                        <button aria-label="dashboard" class="focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 mx-auto rounded text-white text-xs sm:text-sm relative flex items-center rounded-full space-x-5 hover:bg-gradient-to-r from-sky-600 to-cyan-400 px-4 py-3 text-white">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                                <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
+                                            </svg>
+                                        </button>
+
+                                    </div>
                                 </div>
                                 <hr>
-                                <div class="p-4">
+                                <div @click="copyText(response)" class="p-4">
                                     <div class="flex items-center flex-wrap">
                                         <p v-for="line in response.contenu.split('\n')" class="text-white font-normal w-full">
                                             {{ line }}<br>
@@ -40,7 +56,7 @@
                 </div>
             </section>
             <div v-if="this.parent_id !== null" class="flex mr-4 items-center fixed bottom-3 right-3 animate-bounce">
-                <button @click="openModal = true" aria-label="dashboard" class="focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 mx-auto ease-in duration-300 hover:bg-indigo-600 bg-indigo-700 rounded text-white px-4 sm:px-8 py-2 text-xs sm:text-sm relative flex items-center rounded-full space-x-5 hover:bg-gradient-to-r from-sky-600 to-cyan-400 px-4 py-3 text-white">
+                <button @click="openModalRt()" aria-label="dashboard" class="focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 mx-auto ease-in duration-300 hover:bg-indigo-600 bg-indigo-700 rounded text-white px-4 sm:px-8 py-2 text-xs sm:text-sm relative flex items-center rounded-full space-x-5 hover:bg-gradient-to-r from-sky-600 to-cyan-400 px-4 py-3 text-white">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                         <path class="fill-current text-cyan-200 group-hover:text-cyan-300" fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd" />
                     </svg>
@@ -50,6 +66,7 @@
         </div>
         <ModalCreateResponse
             v-if="openModal"
+            :response="this.response"
             :parent_id = "this.parent_id"
             @closeConfirm="(data) => addRT(data)"
         />
@@ -77,10 +94,19 @@ export default {
         return {
             openModal: false,
             responses: this.$page.props.responseTypes,
+            response: null,
             parent_id: null
         }
     },
     methods: {
+        openModalRt () {
+            this.response = null
+            this.openModal = true
+        },
+        updateRt (data) {
+            this.response = data
+            this.openModal = true
+        },
         updateResponse (data = null) {
             if (data) {
                 this.responses = data
@@ -115,6 +141,7 @@ export default {
                 this.responses.push(data)
             }
             this.openModal = false
+            this.response = null
         }
     },
 }

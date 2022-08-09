@@ -51,7 +51,6 @@ class StructureController extends Controller
             } else {
                 $structures = $store;
             }
-
             return response()->json($structures);
         }
     }
@@ -86,6 +85,10 @@ class StructureController extends Controller
         }
 
         $structure = Structure::find($request->structure['id']);
+        $responses = $structure->responses;
+        foreach ($responses as $response) {
+            $response->tags()->detach();
+        }
         $structure->delete();
 
         return response()->json(true);
@@ -119,6 +122,10 @@ class StructureController extends Controller
                     if ($child->parent_id) {
                         $this->deleteParent($child->id, $child->parent_id);
                     }
+                    $responses = $child->responses;
+                    foreach ($responses as $response) {
+                        $response->tags()->detach();
+                    }
                     $child->delete();
                 }
             }
@@ -137,7 +144,7 @@ class StructureController extends Controller
             $structure = Structure::find($parent);
             $childrens = $structure->childrens;
             $parent_id = Structure::findMany(json_decode($childrens))->first()->parent_id;
-            return response()->json(['responses' => $structure->responses ,'structures' => Structure::findMany(json_decode($childrens)), 'parent_id' => $parent_id]);
+            return response()->json(['responses' => $structure->responses()->with('tags')->get() ,'structures' => Structure::findMany(json_decode($childrens)), 'parent_id' => $parent_id]);
 
         } else {
             return response()->json(['responses' => null,'structures' => Structure::where('parent_id', null)->get(), 'parent_id' => $parent_id]);
@@ -153,7 +160,7 @@ class StructureController extends Controller
         $structure = Structure::find($request->id);
 
         return response()->json([
-            'responses' => $structure->responses,
+            'responses' => $structure->responses()->with('tags')->get(),
             'structures' => Structure::findMany(json_decode($structure->childrens))
         ]);
     }

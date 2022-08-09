@@ -26,7 +26,24 @@ class ResponseTypeController extends Controller
                 'name' => $tag,
             ]);
         }
-        return response()->json($response);
+        return response()->json($response->with('tags'));
+    }
+
+    /**
+     * @param Request $request
+     * @param ResponseType $responseType
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function update (Request $request, ResponseType $responseType): \Illuminate\Http\JsonResponse
+    {
+        $update = $responseType->update([
+            'titre' => $request->titre,
+            'contenu' => $request->contenu
+        ]);
+
+        // Gestion des tags
+
+        return response()->json($update);
     }
 
     /**
