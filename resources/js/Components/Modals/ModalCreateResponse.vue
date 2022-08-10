@@ -74,12 +74,12 @@ export default {
             contenu: this.contenu,
             tags: this.tags
           })
-              .then(response => {
-                this.$emit('closeConfirm', response.data)
-              })
-              .catch(error => {
-                console.log(error)
-              })
+            .then(response => {
+              this.$emit('closeConfirm', response.data, true)
+            })
+            .catch(error => {
+              console.log(error)
+            })
         }
     }
 }

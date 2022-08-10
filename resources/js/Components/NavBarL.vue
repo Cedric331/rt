@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-white overflow-hidden shadow-sm block">
+    <div class="bg-white overflow-hidden shadow-sm block opacity-90">
         <div class="bg-slate-800">
             <div class="transition ease-in-out delay-4000 w-72 overflow-hidden">
                 <div class="flex h-screen flex-col justify-between pt-2">

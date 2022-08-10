@@ -33,7 +33,7 @@
                                             </svg>
                                         </button>
 
-                                        <button aria-label="dashboard" class="focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 mx-auto rounded text-white text-xs sm:text-sm relative flex items-center rounded-full space-x-5 hover:bg-gradient-to-r from-sky-600 to-cyan-400 px-4 py-3 text-white">
+                                        <button @click="this.confirmDelete = true; this.dataRt = response" aria-label="dashboard" class="focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 mx-auto rounded text-white text-xs sm:text-sm relative flex items-center rounded-full space-x-5 hover:bg-gradient-to-r from-sky-600 to-cyan-400 px-4 py-3 text-white">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                                                 <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
                                             </svg>
@@ -64,11 +64,15 @@
                 </button>
             </div>
         </div>
+        <ModalConfirm v-if="confirmDelete"
+                      @deleteStructure="deleteRt()"
+                      @closeConfirm="this.dataRt = null; this.confirmDelete = false"
+        />
         <ModalCreateResponse
             v-if="openModal"
             :response="this.response"
             :parent_id = "this.parent_id"
-            @closeConfirm="(data) => addRT(data)"
+            @closeConfirm="(data, isUpdate) => addRT(data, isUpdate)"
         />
     </BreezeAuthenticatedLayout>
 </template>
@@ -81,9 +85,11 @@ import { Head } from '@inertiajs/inertia-vue3';
 import NavBar from "@/Components/NavBar.vue";
 import NavBarL from "@/Components/NavBarL.vue";
 import ModalCreateResponse from "@/Components/Modals/ModalCreateResponse.vue";
+import ModalConfirm from "@/Components/Modals/ModalConfirm.vue";
 
 export default {
     components: {
+        ModalConfirm,
         ModalCreateResponse,
         BreezeAuthenticatedLayout,
         NavBarL,
@@ -92,7 +98,9 @@ export default {
     },
     data () {
         return {
+            confirmDelete: false,
             openModal: false,
+            dataRt: null,
             responses: this.$page.props.responseTypes,
             response: null,
             parent_id: null
@@ -106,6 +114,33 @@ export default {
         updateRt (data) {
             this.response = data
             this.openModal = true
+        },
+        deleteRt () {
+            axios.delete('response/' + this.dataRt.id)
+                .then(() => {
+                    this.responses.forEach((item, index) => {
+                        if (item.id === this.dataRt.id) {
+                            this.responses.splice(index, 1)
+                        }
+                    })
+                    this.$notify({
+                        title: "RT supprimée avec succès",
+                        type: 'success',
+                        duration: 3000,
+                    });
+                })
+                .catch(error => {
+                    this.$notify({
+                        title: "Oups petit problème !! :)",
+                        type: 'warn',
+                        duration: 3000,
+                    });
+                    console.log(error)
+                })
+            .finally(() => {
+                this.dataRt = null;
+                this.confirmDelete = false
+            })
         },
         updateResponse (data = null) {
             if (data) {
@@ -122,7 +157,7 @@ export default {
             })
              navigator.clipboard.writeText(textFormated)
 
-             axios.patch('response/rating', {
+             axios.put('response/rating', {
                  id: data.id
              })
              .then(() => {
@@ -136,8 +171,15 @@ export default {
                  console.log(error)
              })
         },
-        addRT (data) {
-            if (data) {
+        addRT (data, isUpdate) {
+            if (data && isUpdate) {
+                this.responses.forEach((item, index) => {
+                    if (item.id === data.id) {
+                        this.responses[index] = data
+                    }
+                })
+            }
+            if (data && !isUpdate) {
                 this.responses.push(data)
             }
             this.openModal = false

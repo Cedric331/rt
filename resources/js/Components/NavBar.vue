@@ -1,6 +1,6 @@
 <template>
 
-    <nav class="w-full border-gray-200 px-2 sm:px-4 py-2.5 rounded bg-slate-800">
+    <nav class="w-full border-gray-200 px-2 sm:px-4 py-2.5 rounded bg-slate-800 opacity-90">
         <div class="container flex flex-wrap justify-between items-center mx-auto w-full">
             <div></div>
                 <div class="flex ">

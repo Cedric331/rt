@@ -22,11 +22,13 @@ class ResponseTypeController extends Controller
 
         $tags = explode(';', $request->tags);
         foreach ($tags as $tag) {
-            $response->tags()->firstOrCreate([
-                'name' => $tag,
-            ]);
+            if ($tag) {
+                $response->tags()->firstOrCreate([
+                    'name' => $tag,
+                ]);
+            }
         }
-        return response()->json($response->with('tags'));
+        return response()->json(ResponseType::with('tags')->find($response->id));
     }
 
     /**
@@ -36,14 +38,32 @@ class ResponseTypeController extends Controller
      */
     public function update (Request $request, ResponseType $responseType): \Illuminate\Http\JsonResponse
     {
-        $update = $responseType->update([
+        $responseType->update([
             'titre' => $request->titre,
             'contenu' => $request->contenu
         ]);
 
-        // Gestion des tags
+        $tags = explode(';', $request->tags);
+        $responseType->tags()->detach();
+        foreach ($tags as $tag) {
+            if ($tag) {
+                $responseType->tags()->firstOrCreate([
+                    'name' => $tag,
+                ]);
+            }
+        }
+        return response()->json(ResponseType::with('tags')->find($responseType->id));
+    }
 
-        return response()->json($update);
+    /**
+     * @param ResponseType $responseType
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function delete (ResponseType $responseType): \Illuminate\Http\JsonResponse
+    {
+        $delete = $responseType->delete();
+
+        return response()->json($delete);
     }
 
     /**
