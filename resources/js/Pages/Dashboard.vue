@@ -143,9 +143,11 @@ export default {
             })
         },
         updateResponse (data = null) {
+
             if (data) {
                 this.responses = data
             } else {
+                this.$page.props.responseTypes.reload()
                 this.responses = this.$page.props.responseTypes
             }
         },

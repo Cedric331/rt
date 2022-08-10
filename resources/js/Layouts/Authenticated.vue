@@ -16,7 +16,7 @@ const showingNavigationDropdown = ref(false);
         <div class="min-h-screen  flex flex-col">
 
             <!-- Page Heading -->
-            <header class="shadow flex-1" v-if="$slots.header">
+            <header class="flex-1" v-if="$slots.header">
                 <div>
                     <slot name="header" />
                 </div>
