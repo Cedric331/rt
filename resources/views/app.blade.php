@@ -16,15 +16,15 @@
     </head>
     <body class="font-sans antialiased">
     <video autoplay muted loop>
-        <source src="{{ asset('storage/video/background.mp4') }}" type="video/mp4">
+        <source src="{{ asset('storage/video/background'.rand(1,6).'.mp4') }}" type="video/mp4">
     </video>
         @inertia
     </body>
 </html>
 
-<script>
-    document.querySelector('video').playbackRate = 0.6;
-</script>
+{{--<script>--}}
+{{--    document.querySelector('video').playbackRate = 1;--}}
+{{--</script>--}}
 
 <style>
     video {

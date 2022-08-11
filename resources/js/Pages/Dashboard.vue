@@ -4,13 +4,19 @@
     <BreezeAuthenticatedLayout class="relative">
         <template #header>
             <div>
-                <NavBar class="fixed z-10"></NavBar>
+                <NavBar class="fixed z-10"
+                        @search="(data, bool) => search(data, bool)"
+                        :resetSearch="resetSearch">
+                </NavBar>
             </div>
         </template>
 
         <div class="-order-1 flex max-h-[54rem] z-20">
 
-            <NavBarL class="fixed top-0 z-20" @updateResponse="(data) => updateResponse(data)" @parent="(data) => this.parent_id = data"></NavBarL>
+            <NavBarL class="fixed top-0 z-20"
+                     @updateResponse="(data) => updateResponse(data)"
+                     @parent="(data) => this.parent_id = data">
+            </NavBarL>
 
             <section class="text-white w-9/12 absolute left-80 top-16">
                 <div class="container px-5 py-5 mx-auto">
@@ -101,7 +107,9 @@ export default {
             confirmDelete: false,
             openModal: false,
             dataRt: null,
+            resetSearch: 0,
             responses: this.$page.props.responseTypes,
+            saveResponse: this.$page.props.responseTypes,
             response: null,
             parent_id: null
         }
@@ -143,11 +151,12 @@ export default {
             })
         },
         updateResponse (data = null) {
-
+            this.resetSearch++
             if (data) {
                 this.responses = data
+                this.saveResponse = data
             } else {
-                this.$page.props.responseTypes.reload()
+                Inertia.reload()
                 this.responses = this.$page.props.responseTypes
             }
         },
@@ -172,6 +181,13 @@ export default {
              .catch(error => {
                  console.log(error)
              })
+        },
+        search (data, bool) {
+            if (bool) {
+                this.responses = data
+            } else {
+                this.responses = this.saveResponse
+            }
         },
         addRT (data, isUpdate) {
             if (data && isUpdate) {

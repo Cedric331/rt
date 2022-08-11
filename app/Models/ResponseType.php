@@ -25,4 +25,9 @@ class ResponseType extends Model
     {
         return $this->belongsToMany(Tag::class, 'response_type_tags');
     }
+
+    public function structure (): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Structure::class);
+    }
 }
