@@ -151,6 +151,7 @@ export default {
             })
         },
         updateResponse (data = null) {
+            console.log(data)
             this.resetSearch++
             if (data) {
                 this.responses = data

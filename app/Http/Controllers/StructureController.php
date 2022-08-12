@@ -143,8 +143,17 @@ class StructureController extends Controller
         if ($parent) {
             $structure = Structure::find($parent);
             $childrens = $structure->childrens;
+            $idChildren = $this->checkChildren(json_decode($childrens));
+            $responseChildren = Structure::with('responses.tags')->findMany($idChildren->toArray());
+
+            $collection = $structure->responses()->with('tags')->get();
+            foreach ($responseChildren as $children) {
+                foreach ($children->responses as $response) {
+                    $collection->push($response);
+                }
+            }
             $parent_id = Structure::findMany(json_decode($childrens))->first()->parent_id;
-            return response()->json(['responses' => $structure->responses()->with('tags')->get() ,'structures' => Structure::findMany(json_decode($childrens)), 'parent_id' => $parent_id]);
+            return response()->json(['responses' => $collection ,'structures' => Structure::findMany(json_decode($childrens)), 'parent_id' => $parent_id]);
 
         } else {
             return response()->json(['responses' => null,'structures' => Structure::where('parent_id', null)->get(), 'parent_id' => $parent_id]);
@@ -159,9 +168,45 @@ class StructureController extends Controller
     {
         $structure = Structure::find($request->id);
 
+        $idChildren = $this->checkChildren(json_decode($structure->childrens));
+        $responseChildren = Structure::with('responses.tags')->findMany($idChildren->toArray());
+
+        $collection = $structure->responses()->with('tags')->get();
+        foreach ($responseChildren as $children) {
+            foreach ($children->responses as $response) {
+                $collection->push($response);
+            }
+        }
+
         return response()->json([
-            'responses' => $structure->responses()->with('tags')->get(),
+            'responses' => $collection,
             'structures' => Structure::findMany(json_decode($structure->childrens))
         ]);
+    }
+
+    /**
+     * @param $data
+     * @return \Illuminate\Support\Collection
+     */
+    private function checkChildren ($data): \Illuminate\Support\Collection
+    {
+        $collect = collect();
+        $childrens = collect($data);
+        while($childrens->count() > 0){
+            $nextChilrdens = collect();
+            foreach ($childrens as $children) {
+                $collect->push($children);
+                $structure = Structure::find($children);
+                if ($structure->childrens && count(json_decode($structure->childrens)) > 0) {
+                    foreach (json_decode($structure->childrens) as $child) {
+                        if ($child) {
+                            $nextChilrdens->push($child);
+                        }
+                    }
+                }
+            }
+            $childrens = $nextChilrdens;
+        }
+        return $collect;
     }
 }
