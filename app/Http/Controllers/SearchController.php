@@ -37,8 +37,7 @@ class SearchController extends Controller
                         }
                     });
                 });
-            })
-            ->get();
+            })->get();
 
         return response()->json($search);
     }

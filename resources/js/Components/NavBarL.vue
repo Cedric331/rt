@@ -30,7 +30,7 @@
                         </div>
                         <hr class="bg-white">
                     </div>
-                    <div class="min-h-[20%] max-h-[20%]">
+                    <div class="min-h-[40%] max-h-[40%] mt-3">
                         <ul class="tracking-wide">
                             <li class="min-w-max flex justify-center" v-if="this.parent_id !== null">
                                 <button @click="retour()" class="relative items-center rounded-full space-x-1 hover:bg-gradient-to-r from-sky-600 to-cyan-400 px-2 py-1 text-white">
@@ -53,19 +53,6 @@
                                 </button>
                             </li>
                         </ul>
-                    </div>
-
-                    <div class="w-full hover:bg-gradient-to-r from-sky-600 to-cyan-400 min-h-[15%] max-h-[15%]">
-                        <div class="w-max group flex items-center space-x-4 rounded-md px-4 py-3 text-white">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                <path class="fill-current text-gray-300 group-hover:text-cyan-300" stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                            </svg>
-                            <span>
-                               <Link :href="route('logout')" method="post" as="button">
-                                    Se déconnecter
-                                </Link>
-                            </span>
-                        </div>
                     </div>
                 </div>
             </div>

@@ -1,6 +1,6 @@
 <template>
-
-    <nav class="w-full border-gray-200 px-2 sm:px-4 py-2.5 rounded bg-slate-800 opacity-90">
+    <nav class="w-full border-gray-200 px-2 sm:px-4 py-2.5 rounded bg-slate-800" :class="[openModal ? 'opacity-100' : 'opacity-90']">
+        <div v-if="show" @click="show = false" class="fixed inset-0" aria-hidden="true"></div>
         <div class="container flex flex-wrap justify-between items-center mx-auto w-full">
             <div></div>
                 <div class="flex ">
@@ -12,61 +12,70 @@
                     </div>
                 </div>
 
-            <div class="flex items-center">
-                <button id="mega-menu-icons-dropdown-button" data-dropdown-toggle="mega-menu-icons-dropdown" class="flex justify-between items-center py-2 pr-4 pl-3 w-full font-medium text-gray-700 border-b border-gray-100 md:w-auto hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-600 md:p-0 dark:text-gray-400 md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700">
-                    Company
-                    <svg aria-hidden="true" class="ml-1 w-5 h-5 md:w-4 md:h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                </button>
-                <div id="mega-menu-icons-dropdown" class="grid hidden absolute z-10 grid-cols-2 w-auto text-sm bg-white rounded-lg border border-gray-100 shadow-md dark:border-gray-700 md:grid-cols-3 dark:bg-gray-700">
-                    <div class="p-4 pb-0 text-gray-900 md:pb-4 dark:text-white">
-                        <ul class="space-y-4" aria-labelledby="mega-menu-icons-dropdown-button">
-                            <li>
-                                <a href="#" class="flex items-center text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-500 group">
-                                    <span class="sr-only">About us</span>
-                                    <svg class="mr-2 w-4 h-4 text-gray-400 dark:text-gray-500 group-hover:text-blue-600 dark:group-hover:text-blue-500" aria-hidden="true" focusable="false" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
-                                    About Us
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" class="flex items-center text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-500 group">
-                                    <span class="sr-only">Library</span>
-                                    <svg class="mr-2 w-4 h-4 text-gray-400 dark:text-gray-500 group-hover:text-blue-600 dark:group-hover:text-blue-500" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                                    Library
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" class="flex items-center text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-500 group">
-                                    <span class="sr-only">Resources</span>
-                                    <svg class="mr-2 w-4 h-4 text-gray-400 dark:text-gray-500 group-hover:text-blue-600 dark:group-hover:text-blue-500" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z"></path></svg>
-                                    Resources
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" class="flex items-center text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-500 group">
-                                    <span class="sr-only">Pro Version</span>
-                                    <svg class="mr-2 w-4 h-4 text-gray-400 dark:text-gray-500 group-hover:text-blue-600 dark:group-hover:text-blue-500" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M12.395 2.553a1 1 0 00-1.45-.385c-.345.23-.614.558-.822.88-.214.33-.403.713-.57 1.116-.334.804-.614 1.768-.84 2.734a31.365 31.365 0 00-.613 3.58 2.64 2.64 0 01-.945-1.067c-.328-.68-.398-1.534-.398-2.654A1 1 0 005.05 6.05 6.981 6.981 0 003 11a7 7 0 1011.95-4.95c-.592-.591-.98-.985-1.348-1.467-.363-.476-.724-1.063-1.207-2.03zM12.12 15.12A3 3 0 017 13s.879.5 2.5.5c0-1 .5-4 1.25-4.5.5 1 .786 1.293 1.371 1.879A2.99 2.99 0 0113 13a2.99 2.99 0 01-.879 2.121z" clip-rule="evenodd"></path></svg>
-                                    Pro Version
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+            <ul class="header__navbar">
+                <li class="header__item">
+                    <a href="#" class="header__link">
+                        <button v-if="show" key="on" @click="show = false" aria-label="open menu" class="focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 mx-auto rounded text-white text-xs sm:text-sm relative flex items-center rounded-full space-x-3 hover:bg-gradient-to-r from-sky-600 to-cyan-400 px-4 py-3 text-white">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd" />
+                            </svg>
+                        </button>
+                        <button v-else key="off" @click="show = true" aria-label="close menu" class="focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 mx-auto rounded text-white text-xs sm:text-sm relative flex items-center rounded-full space-x-3 hover:bg-gradient-to-r from-sky-600 to-cyan-400 px-4 py-3 text-white">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd" />
+                            </svg>
+                        </button>
+                    </a>
+                        <div class="dropdown__menu" v-bind:class="{ active: show }" v-if="show">
+                            <ul class="dropdown__menu-nav ">
+                                <li class="dropdown__menu-item">
+                                    <button @click="openModal = true; show = false" aria-label="close menu" class="dropdown__menu-link focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 ml-1 rounded text-white text-xs sm:text-sm relative flex items-center rounded-full space-x-3 hover:bg-gradient-to-r from-sky-600 to-cyan-400 px-4 py-3 text-white">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                            <path d="M10 2a5 5 0 00-5 5v2a2 2 0 00-2 2v5a2 2 0 002 2h10a2 2 0 002-2v-5a2 2 0 00-2-2H7V7a3 3 0 015.905-.75 1 1 0 001.937-.5A5.002 5.002 0 0010 2z" />
+                                        </svg>
+                                        <span class="dropdown__menu-link">Modifier mon mot de passe</span>
+                                    </button>
+                                    <Link :href="route('logout')" method="post" as="button" aria-label="close menu" class="dropdown__menu-link focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 ml-1 rounded text-white text-xs sm:text-sm relative flex items-center rounded-full space-x-3 hover:bg-gradient-to-r from-sky-600 to-cyan-400 px-4 py-3 text-white">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                            <path class="fill-current text-gray-300 group-hover:text-cyan-300" stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                                        </svg>
+                                        <span>
+                                            Se déconnecter
+                                        </span>
+                                    </Link>
+                                </li>
+                            </ul>
+                        </div>
+                </li>
+            </ul>
         </div>
+        <ModalUpdatePassword
+            class="opacity-100"
+            v-if="openModal"
+            @closeConfirm="openModal = false"
+        />
     </nav>
-
 </template>
 
 <script>
 
+import ModalUpdatePassword from "@/Components/Modals/ModalUpdatePassword.vue";
+import {Link} from "@inertiajs/inertia-vue3";
+
 export default {
     name: "NavBar",
+    components: {
+        ModalUpdatePassword,
+        Link
+    },
     props: {
         resetSearch: Number
     },
     data () {
         return {
-            searchText: ''
+            searchText: '',
+            openModal: false,
+            show: false
         }
     },
     watch: {
@@ -95,5 +104,92 @@ export default {
 </script>
 
 <style scoped>
+:root {
+    --font-primary: 'Open Sans', sans-serif;
+    --color-gray: #dadce0;
+}
 
+   *,
+   ::after,
+   ::before {
+       box-sizing: border-box;
+   }
+
+body {
+    font-size: 1rem;
+    -webkit-text-size-adjust: 100%;
+    font-family: var(--font-primary);
+    overflow: hidden;
+}
+hr {
+    border: 0;
+    height: 0;
+    margin: 1.5rem 0;
+    border-top: 1px solid var(--color-gray);
+}
+
+   .header {
+       padding: 2rem 5rem 2rem 5rem;
+&__nav {
+     position: relative;
+ }
+&__navbar {
+     display: flex;
+     align-items: center;
+     justify-content: flex-end;
+ }
+&__item {
+     padding: 1rem;
+ }
+&--icon {
+     width: 1.65rem;
+     height: 1.65rem;
+ }
+&--button {
+     top: 0;
+     right: 0;
+     position: absolute;
+     margin: 0;
+     padding: 0;
+     color: gray;
+     cursor: pointer;
+     border: 1px solid transparent;
+     background-color: transparent;
+&:focus {
+     outline: 0;
+ }
+}
+}
+
+   .dropdown__menu {
+       top: 100%;
+       right: 0;
+       position: absolute;
+       z-index: 10;
+       height: 10rem;
+       min-width: 150px;
+       margin-top: 1rem;
+       margin-right: 1.5rem;
+       overflow-y: auto;
+       padding: 2rem 1rem 2rem 0rem;
+       border-radius: 12px;
+       background-color: rgb(51 65 85);
+       border: 1px solid var(--color-gray);
+       background-clip: padding-box;
+&-link {
+     display: flex;
+     align-items: center;
+     justify-content: flex-start;
+     text-decoration: none;
+     color: rgba(0, 0, 0, 0.6);
+     padding: 0.8rem 0 0.8rem 2rem;
+     margin-top: 0.2rem;
+     margin-bottom: 0.2rem;
+     border-radius: 0 50px 50px 0;
+&:hover {
+     color: #17bf63;
+     background-color: rgba(79, 192, 141, 0.1);
+ }
+}
+}
 </style>
