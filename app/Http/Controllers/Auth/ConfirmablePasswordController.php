@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
@@ -29,16 +32,22 @@ class ConfirmablePasswordController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        ]);
+
         if (! Auth::guard('web')->validate([
             'email' => $request->user()->email,
-            'password' => $request->password,
+            'password' => $request->oldPassword,
         ])) {
             throw ValidationException::withMessages([
                 'password' => __('auth.password'),
             ]);
         }
 
-        $request->session()->put('auth.password_confirmed_at', time());
+        $user = User::find($request->user()->id);
+        $user->password = Hash::make($request->password);
+        $user->save();
 
         return redirect()->intended(RouteServiceProvider::HOME);
     }
