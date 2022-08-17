@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ResponseType;
 use App\Models\Structure;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,10 @@ class StructureController extends Controller
      */
     public function index (): \Illuminate\Http\JsonResponse
     {
-        return response()->json(Structure::where('parent_id', null)->get());
+        return response()->json([
+            'responseType' => ResponseType::all(),
+            'structure' => Structure::where('parent_id', null)->get()
+        ]);
     }
 
     /**
@@ -21,6 +25,10 @@ class StructureController extends Controller
      */
     public function store (Request $request): \Illuminate\Http\JsonResponse
     {
+        $request->validate([
+            'element' => 'bail|required|max:25|string'
+        ]);
+
         if ($request->parent) {
             $structure = Structure::find($request->parent);
 
@@ -41,6 +49,7 @@ class StructureController extends Controller
 
             return response()->json(Structure::findMany(json_decode($structure->childrens)));
         } else {
+
             $store = Structure::create([
                 'name' => $request->element
             ]);
@@ -61,6 +70,10 @@ class StructureController extends Controller
      */
     public function update (Request $request): \Illuminate\Http\JsonResponse
     {
+        $request->validate([
+            'element' => 'bail|required|max:25|string'
+        ]);
+
         $structure = Structure::find($request->structure['id']);
         $structure->name = $request->element;
         $structure->save();
@@ -153,10 +166,18 @@ class StructureController extends Controller
                 }
             }
             $parent_id = Structure::findMany(json_decode($childrens))->first()->parent_id;
-            return response()->json(['responses' => $collection ,'structures' => Structure::findMany(json_decode($childrens)), 'parent_id' => $parent_id]);
+            return response()->json([
+                'responses' => $collection ,
+                'structures' => Structure::findMany(json_decode($childrens)),
+                'parent_id' => $parent_id
+            ]);
 
         } else {
-            return response()->json(['responses' => null,'structures' => Structure::where('parent_id', null)->get(), 'parent_id' => $parent_id]);
+            return response()->json([
+                'responses' => null,
+                'structures' => Structure::where('parent_id', null)->get(),
+                'parent_id' => $parent_id
+            ]);
         }
     }
 

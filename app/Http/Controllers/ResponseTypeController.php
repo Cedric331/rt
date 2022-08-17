@@ -14,6 +14,16 @@ class ResponseTypeController extends Controller
      */
     public function store (Request $request): \Illuminate\Http\JsonResponse
     {
+        $validator = $request->validate([
+            'titre' => 'required|max:50|string',
+            'contenu' => 'required|string',
+            'tags' => 'nullable|string'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->messages(), 400);
+        }
+
         $response = ResponseType::create([
             'titre' => $request->titre,
             'contenu' => $request->contenu,
@@ -38,6 +48,12 @@ class ResponseTypeController extends Controller
      */
     public function update (Request $request, ResponseType $responseType): \Illuminate\Http\JsonResponse
     {
+        $request->validate([
+            'titre' => 'bail|required|max:50|string',
+            'contenu' => 'bail|required|string',
+            'tags' => 'bail|nullable|string'
+        ]);
+
         $responseType->update([
             'titre' => $request->titre,
             'contenu' => $request->contenu

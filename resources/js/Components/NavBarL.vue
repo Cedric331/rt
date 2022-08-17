@@ -126,6 +126,11 @@
                         this.structures.splice(index, 1)
                     }
                 })
+                this.$notify({
+                    title: "Structure suprimée avec succès",
+                    type: 'success',
+                    duration: 3000,
+                });
                 this.delStructure = null
                 this.openDel = false
             })
@@ -146,6 +151,11 @@
                             this.structures[index] = response.data
                         }
                     })
+                    this.$notify({
+                        title: "Structure modifiée avec succès",
+                        type: 'success',
+                        duration: 3000,
+                    });
                 })
                 .catch(error => {
                     console.log(error)
@@ -159,6 +169,11 @@
                 parent: this.parent_id
             })
                 .then(response => {
+                    this.$notify({
+                        title: "Structure ajoutée avec succès",
+                        type: 'success',
+                        duration: 3000,
+                    });
                 this.structures = response.data
                 this.openModal = false
             })
@@ -183,8 +198,8 @@
             this.parent_id = null
             axios.get('structure')
             .then(response => {
-                this.structures = response.data
-                this.$emit('updateResponse', null)
+                this.structures = response.data.structure
+                this.$emit('updateResponse', response.data.responseType)
             })
             .catch(error => {
                 console.log(error)

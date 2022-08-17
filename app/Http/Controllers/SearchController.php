@@ -16,15 +16,23 @@ class SearchController extends Controller
         $array = explode(' ', $request->search);
         $search = ResponseType::with(['tags', 'structure'])
             ->where(function ($query) use ($array) {
-                foreach ($array as $item) {
-                    $query->orWhere('titre', 'LIKE', '%'.$item.'%');
+                foreach ($array as $key => $value) {
+                    if ($key > 0) {
+                        $query->orWhere('titre', 'LIKE', '%'.$value.'%');
+                    } else {
+                        $query->where('titre', 'LIKE', '%'.$value.'%');
+                    }
                 }
             })
             ->orWhere(function ($query) use ($array) {
                 $query->whereHas('tags', function ($query) use ($array) {
                     $query->where(function ($query) use ($array) {
-                        foreach ($array as $item) {
-                            $query->orWhere('name', 'LIKE', '%'.$item.'%');
+                        foreach ($array as $key => $value) {
+                            if ($key > 0) {
+                                $query->orWhere('name', 'LIKE', '%'.$value.'%');
+                            } else {
+                                $query->where('name', 'LIKE', '%'.$value.'%');
+                            }
                         }
                     });
                 });
@@ -32,8 +40,12 @@ class SearchController extends Controller
             ->orWhere(function ($query) use ($array) {
                 $query->whereHas('structure', function ($query) use ($array) {
                     $query->where(function ($query) use ($array) {
-                        foreach ($array as $item) {
-                            $query->orWhere('name', 'LIKE', '%'.$item.'%');
+                        foreach ($array as $key => $value) {
+                            if ($key > 0) {
+                                $query->orWhere('name', 'LIKE', '%'.$value.'%');
+                            } else {
+                                $query->where('name', 'LIKE', '%'.$value.'%');
+                            }
                         }
                     });
                 });

@@ -48,7 +48,6 @@ export default {
                 password_confirmation: this.password_confirmation
             })
                 .then(response => {
-                    console.log(response.data)
                     this.$emit('closeConfirm', response.data)
                 })
                 .catch(error => {
