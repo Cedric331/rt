@@ -98,7 +98,7 @@ export default {
                 } else {
                     this.$emit('search', null, false)
                 }
-        }, 400),
+        }, 200),
     }
 }
 </script>
