@@ -72,7 +72,9 @@
             </div>
         </div>
 
-        <ModalChart v-if="openChart" />
+        <ModalChart v-if="openChart"
+                    @closeConfirm="this.openChart = false"
+        />
 
         <ModalConfirm v-if="confirmDelete"
                       @deleteStructure="deleteRt()"

@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\ResponseType;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class ResponseTypeController extends Controller
 {
@@ -14,7 +17,7 @@ class ResponseTypeController extends Controller
      */
     public function store (Request $request): \Illuminate\Http\JsonResponse
     {
-        $validator = $request->validate([
+        $validator = Validator::make($request->all(), [
             'titre' => 'required|max:50|string',
             'contenu' => 'required|string',
             'tags' => 'nullable|string'
@@ -88,6 +91,10 @@ class ResponseTypeController extends Controller
      */
     public function addRating (Request $request): bool
     {
+        $user = User::find(Auth::id());
+        $user->increment('use_rt');
+        $user->save();
+
         $response = ResponseType::find($request->id);
         $response->rating++;
         $response->save();

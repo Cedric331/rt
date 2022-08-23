@@ -21,5 +21,22 @@ class UserSeeder extends Seeder
              'password' => Hash::make('123456789'),
              'email' => 'limacedric@hotmail.fr',
          ]);
+
+         $names = [
+             'Bob',
+             'Fred',
+             'Xav',
+             'Marie',
+             'Camille',
+         ];
+
+         for ($i = 0; $i < 5; $i++) {
+             User::factory()->create([
+                 'name' => $names[rand(0,4)],
+                 'use_rt' => rand(0,100),
+                 'password' => Hash::make('123456789'),
+                 'email' => rand(0,9999) . '@hotmail.fr',
+             ]);
+         }
     }
 }
