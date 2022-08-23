@@ -20,6 +20,8 @@
         "vue": "^3.2.31"
     },
     "dependencies": {
-        "@kyvg/vue3-notification": "^2.3.6"
+        "@kyvg/vue3-notification": "^2.3.6",
+        "chart.js": "^3.9.1",
+        "vue-chartjs": "^4.1.1"
     }
 }

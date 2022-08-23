@@ -7,6 +7,7 @@ import { InertiaProgress } from '@inertiajs/progress';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
 import Notifications from '../../node_modules/@kyvg/vue3-notification'
+import { Bar } from 'vue-chartjs'
 
 const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Laravel';
 
@@ -17,6 +18,7 @@ createInertiaApp({
     setup({ el, app, props, plugin }) {
         return createApp({ render: () => h(app, props) })
             .use(plugin)
+            .use(Bar)
             .use(Notifications)
             .use(ZiggyVue, Ziggy)
             .mount(el);

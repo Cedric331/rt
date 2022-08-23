@@ -29,6 +29,12 @@
                         <div class="dropdown__menu" v-bind:class="{ active: show }" v-if="show">
                             <ul class="dropdown__menu-nav ">
                                 <li class="dropdown__menu-item">
+                                    <button @click="this.$emit('openChart')" aria-label="close menu" class="dropdown__menu-link focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 ml-1 rounded text-white text-xs sm:text-sm relative flex items-center rounded-full space-x-3 hover:bg-gradient-to-r from-sky-600 to-cyan-400 px-4 py-3 text-white">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                            <path d="M10 2a5 5 0 00-5 5v2a2 2 0 00-2 2v5a2 2 0 002 2h10a2 2 0 002-2v-5a2 2 0 00-2-2H7V7a3 3 0 015.905-.75 1 1 0 001.937-.5A5.002 5.002 0 0010 2z" />
+                                        </svg>
+                                        <span class="dropdown__menu-link">Voir Graphique</span>
+                                    </button>
                                     <button @click="openModal = true; show = false" aria-label="close menu" class="dropdown__menu-link focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 ml-1 rounded text-white text-xs sm:text-sm relative flex items-center rounded-full space-x-3 hover:bg-gradient-to-r from-sky-600 to-cyan-400 px-4 py-3 text-white">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                                             <path d="M10 2a5 5 0 00-5 5v2a2 2 0 00-2 2v5a2 2 0 002 2h10a2 2 0 002-2v-5a2 2 0 00-2-2H7V7a3 3 0 015.905-.75 1 1 0 001.937-.5A5.002 5.002 0 0010 2z" />
@@ -36,7 +42,7 @@
                                         <span class="dropdown__menu-link">Modifier mon mot de passe</span>
                                     </button>
                                     <Link :href="route('logout')" method="post" as="button" aria-label="close menu" class="dropdown__menu-link focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 ml-1 rounded text-white text-xs sm:text-sm relative flex items-center rounded-full space-x-3 hover:bg-gradient-to-r from-sky-600 to-cyan-400 px-4 py-3 text-white">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 20 20" stroke="currentColor" stroke-width="2">
                                             <path class="fill-current text-gray-300 group-hover:text-cyan-300" stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                                         </svg>
                                         <span>
@@ -166,12 +172,12 @@ hr {
        right: 0;
        position: absolute;
        z-index: 10;
-       height: 10rem;
+       height: auto;
        min-width: 150px;
-       margin-top: 1rem;
+       margin-top: 0rem;
        margin-right: 1.5rem;
        overflow-y: auto;
-       padding: 2rem 1rem 2rem 0rem;
+       padding: 1rem 1rem;
        border-radius: 12px;
        background-color: rgb(51 65 85);
        border: 1px solid var(--color-gray);
