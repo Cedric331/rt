@@ -3,7 +3,7 @@
         <div @click="this.$emit('closeConfirm')" class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
         <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
             <div class="inline-block align-bottom p-4 bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-                    <Pie
+                <Pie
                         v-if="loaded"
                         :chart-options="chartOptions"
                         :chart-data="chartData"
@@ -15,7 +15,19 @@
                         :width="width"
                         :height="height"
                     />
+                <div v-else class="flex justify-center w-full my-5">
+                    Aucune information
                 </div>
+                <div>
+                    <button @click="resetData()" aria-label="dashboard" class="focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 mx-auto rounded text-xs sm:text-sm relative flex items-center rounded-full space-x-3 bg-cyan-600 mt-2 text-white hover:bg-gradient-to-r from-sky-600 to-cyan-400 px-4 py-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+                            <path d="M3.375 3C2.339 3 1.5 3.84 1.5 4.875v.75c0 1.036.84 1.875 1.875 1.875h17.25c1.035 0 1.875-.84 1.875-1.875v-.75C22.5 3.839 21.66 3 20.625 3H3.375z" />
+                            <path fill-rule="evenodd" d="M3.087 9l.54 9.176A3 3 0 006.62 21h10.757a3 3 0 002.995-2.824L20.913 9H3.087zm6.133 2.845a.75.75 0 011.06 0l1.72 1.72 1.72-1.72a.75.75 0 111.06 1.06l-1.72 1.72 1.72 1.72a.75.75 0 11-1.06 1.06L12 15.685l-1.72 1.72a.75.75 0 11-1.06-1.06l1.72-1.72-1.72-1.72a.75.75 0 010-1.06z" clip-rule="evenodd" />
+                        </svg>
+                        <span class="-mr-1 font-bold">Reset les données</span>
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -67,7 +79,7 @@ export default {
                 labels: [],
                 datasets: [{
                     label: 'Utilisation des RT',
-                    data: [1,54,5,496],
+                    data: [],
                     backgroundColor: [
                         'rgb(255, 80, 132)',
                         'rgb(60, 74, 215)',
@@ -86,18 +98,22 @@ export default {
         }
     },
     methods: {
-        // refreshChart () {
-        //     this.chartData.labels = []
-        //     axios.get('chart/refresh')
-        //     .then(response => {
-        //         response.data.forEach(item => {
-        //             this.chartData.labels += item.name
-        //         })
-        //     })
-        //     .catch(err => {
-        //         console.log(err)
-        //     })
-        // }
+        resetData () {
+            let uses = []
+            this.loaded = false
+            axios.get('chart/reset')
+            .then(response => {
+                response.data.forEach(item => {
+                    this.chartData.labels.push(item.name)
+                    uses.push(item.use_rt)
+                })
+                this.chartData.datasets[0].data = uses
+                this.loaded = true
+            })
+            .catch(err => {
+                console.log(err)
+            })
+        }
     },
     beforeMount () {
         let uses = []
