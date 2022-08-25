@@ -39,6 +39,7 @@ class HandleInertiaRequests extends Middleware
         return array_merge(parent::share($request), [
             'auth' => [
                 'user' => $request->user(),
+                'isAdmin' => $request->user()->isAdmin(),
             ],
             'responseTypes' => ResponseType::with('tags')->orderBy('rating', 'DESC')->get(),
             'structures' => Structure::where('parent_id', null)->get(),

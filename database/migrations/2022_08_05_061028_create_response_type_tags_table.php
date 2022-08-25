@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('response_type__tags');
+        Schema::dropIfExists('response_type_tags');
     }
 };

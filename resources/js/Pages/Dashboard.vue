@@ -7,6 +7,7 @@
                 <NavBar class="fixed z-10"
                         @search="(data, bool) => search(data, bool)"
                         @openChart="this.openChart = true"
+                        @openTeam="this.openTeam = true"
                         :resetSearch="resetSearch">
                 </NavBar>
             </div>
@@ -72,6 +73,10 @@
             </div>
         </div>
 
+        <ModalTeam
+            v-if="openTeam"
+        />
+
         <ModalChart v-if="openChart"
                     @closeConfirm="this.openChart = false"
         />
@@ -99,9 +104,11 @@ import NavBarL from "@/Components/NavBarL.vue";
 import ModalCreateResponse from "@/Components/Modals/ModalCreateResponse.vue";
 import ModalConfirm from "@/Components/Modals/ModalConfirm.vue";
 import ModalChart from "@/Components/Modals/ModalChart.vue";
+import ModalTeam from "@/Components/Modals/ModalTeam.vue";
 
 export default {
     components: {
+        ModalTeam,
         ModalConfirm,
         ModalCreateResponse,
         BreezeAuthenticatedLayout,
@@ -115,6 +122,7 @@ export default {
             confirmDelete: false,
             openModal: false,
             openChart: false,
+            openTeam: false,
             dataRt: null,
             resetSearch: 0,
             responses: this.$page.props.responseTypes,
