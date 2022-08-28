@@ -50,7 +50,7 @@
                                     </div>
                                 </div>
                                 <hr>
-                                <div @click="copyText(response)" class="p-4">
+                                <div @click="copyText(response)" class="p-4 h-5/6">
                                     <div class="flex items-center flex-wrap">
                                         <p v-for="line in response.contenu.split('\n')" class="text-white font-normal w-full">
                                             {{ line }}<br>
@@ -63,7 +63,7 @@
                     </div>
                 </div>
             </section>
-            <div v-if="this.parent_id !== null" class="flex mr-4 items-center fixed bottom-3 right-3 animate-bounce">
+            <div v-if="this.parent_id !== null" class="flex mr-4 items-center fixed bottom-3 right-10 animate-bounce">
                 <button @click="openModalRt()" aria-label="dashboard" class="focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 mx-auto ease-in duration-300 hover:bg-indigo-600 bg-indigo-700 rounded text-white px-4 sm:px-8 py-2 text-xs sm:text-sm relative flex items-center rounded-full space-x-5 hover:bg-gradient-to-r from-sky-600 to-cyan-400 px-4 py-3 text-white">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                         <path class="fill-current text-cyan-200 group-hover:text-cyan-300" fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd" />
@@ -169,6 +169,7 @@ export default {
             })
         },
         updateResponse (data = null) {
+            console.log(data)
             this.resetSearch++
             if (data) {
                 this.responses = data

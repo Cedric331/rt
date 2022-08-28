@@ -174,7 +174,7 @@ class StructureController extends Controller
 
         } else {
             return response()->json([
-                'responses' => null,
+                'responses' => ResponseType::all(),
                 'structures' => Structure::where('parent_id', null)->get(),
                 'parent_id' => $parent_id
             ]);
