@@ -18,7 +18,7 @@
                 <div v-else class="flex justify-center w-full my-5">
                     Aucune information
                 </div>
-                <div>
+                <div v-if="this.$page.props.auth.isAdmin">
                     <button @click="resetData()" aria-label="dashboard" class="focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 mx-auto rounded text-xs sm:text-sm relative flex items-center rounded-full space-x-3 bg-cyan-600 mt-2 text-white hover:bg-gradient-to-r from-sky-600 to-cyan-400 px-4 py-3">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
                             <path d="M3.375 3C2.339 3 1.5 3.84 1.5 4.875v.75c0 1.036.84 1.875 1.875 1.875h17.25c1.035 0 1.875-.84 1.875-1.875v-.75C22.5 3.839 21.66 3 20.625 3H3.375z" />

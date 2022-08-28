@@ -99,7 +99,6 @@
         }
     },
         watch: {
-            // whenever question changes, this function will run
             parent_id() {
                this.$emit('parent', this.parent_id);
             }

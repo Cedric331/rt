@@ -75,6 +75,7 @@
 
         <ModalTeam
             v-if="openTeam"
+            @closeConfirm="this.openTeam = false"
         />
 
         <ModalChart v-if="openChart"
