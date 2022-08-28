@@ -10,17 +10,17 @@
                     <input v-model="name" type="text" id="name" class="block rounded-t-lg px-2.5 pb-2.5 pt-5 w-full text-sm text-gray-900 bg-gray-50 dark:bg-gray-700 border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
                     <label for="name" class="absolute text-sm text-white duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] left-2.5 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4">Nom</label>
                 </div>
-                <span v-if="notifmsg && notifmsg.errors.name" class="text-red-600">{{ notifmsg.errors.name[0] }}</span>
+                <span v-if="notifmsg && notifmsg.name" class="text-red-600">{{ notifmsg.name[0] }}</span>
                 <div class="relative mt-5">
                     <input v-model="email" type="text" id="email" class="block rounded-t-lg px-2.5 pb-2.5 pt-5 w-full text-sm text-gray-900 bg-gray-50 dark:bg-gray-700 border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
                     <label for="email" class="absolute text-sm text-white duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] left-2.5 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4">Email</label>
                 </div>
-                <span v-if="notifmsg && notifmsg.errors.mail" class="text-red-600">{{ notifmsg.errors.mail[0] }}</span>
+                <span v-if="notifmsg && notifmsg.email" class="text-red-600">{{ notifmsg.email[0] }}</span>
                 <div class="relative mt-5">
                     <input v-model="password" type="password" id="password" class="block rounded-t-lg px-2.5 pb-2.5 pt-5 w-full text-sm text-gray-900 bg-gray-50 dark:bg-gray-700 border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
                     <label for="password" class="absolute text-sm text-white duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] left-2.5 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4">Mot de passe</label>
                 </div>
-                <span v-if="notifmsg && notifmsg.errors.password" class="text-red-600">{{ notifmsg.errors.password[0] }}</span>
+                <span v-if="notifmsg && notifmsg.password" class="text-red-600">{{ notifmsg.password[0] }}</span>
 
                 <div class="relative mt-5">
                     <input v-model="password_confirmation" type="password" id="password_confirmation" class="block rounded-t-lg px-2.5 pb-2.5 pt-5 w-full text-sm text-gray-900 bg-gray-50 dark:bg-gray-700 border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
@@ -50,6 +50,7 @@ export default {
     },
     methods: {
         save () {
+          this.notifmsg = ''
             axios.post('user', {
                 name: this.name,
                 email: this.email,
@@ -65,7 +66,7 @@ export default {
                     });
                 })
                 .catch(error => {
-                    this.notifmsg = error.response.data
+                  this.notifmsg = error.response.data
                     console.log(error)
                 })
         }
