@@ -82,14 +82,16 @@ export default {
                     data: [],
                     backgroundColor: [
                         'rgb(255, 80, 132)',
+                        'rgb(99, 10, 132)',
                         'rgb(60, 74, 215)',
+                        'rgb(1, 201, 150)',
                         'rgb(255, 205, 86)',
                         'rgb(224, 78, 78)',
                         'rgb(60, 223, 221)',
                         'rgb(30, 201, 21)',
                         'rgb(203, 64, 201)'
                     ],
-                    hoverOffset: 7
+                    hoverOffset: 9
                 }]
             },
             chartOptions: {
@@ -113,23 +115,28 @@ export default {
             .catch(err => {
                 console.log(err)
             })
+        },
+        getData () {
+            let uses = []
+            this.loaded = false
+            axios.get('chart/refresh')
+                .then(response => {
+                    response.data.forEach(item => {
+                        this.chartData.labels.push(item.name)
+                        uses.push(item.use_rt)
+                        if (item.use_rt > 0) {
+                            this.loaded = true
+                        }
+                    })
+                    this.chartData.datasets[0].data = uses
+                })
+                .catch(err => {
+                    console.log(err)
+                })
         }
     },
-    beforeMount () {
-        let uses = []
-        this.loaded = false
-        axios.get('chart/refresh')
-            .then(response => {
-                response.data.forEach(item => {
-                    this.chartData.labels.push(item.name)
-                    uses.push(item.use_rt)
-                })
-                this.chartData.datasets[0].data = uses
-                this.loaded = true
-            })
-            .catch(err => {
-                console.log(err)
-            })
+    mounted () {
+        this.getData()
     }
 }
 </script>
