@@ -22,10 +22,6 @@
     </body>
 </html>
 
-{{--<script>--}}
-{{--    document.querySelector('video').playbackRate = 1;--}}
-{{--</script>--}}
-
 <style>
     video {
         z-index:-1;
@@ -34,10 +30,4 @@
         background-size: cover;
         position: fixed;
     }
-
-    /*#vidpause{*/
-    /*    position: fixed;*/
-    /*    bottom: 10px;*/
-    /*    right: 10px;*/
-    /*}*/
 </style>

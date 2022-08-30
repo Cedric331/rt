@@ -18,10 +18,10 @@ Route::middleware('guest')->group(function () {
 //    Route::post('register', [RegisteredUserController::class, 'store']);
 
 
-    Route::get('/', [AuthenticatedSessionController::class, 'create'])
+    Route::get('/authenticate', [AuthenticatedSessionController::class, 'create'])
                 ->name('login');
 
-    Route::post('/', [AuthenticatedSessionController::class, 'store']);
+    Route::post('/authenticate', [AuthenticatedSessionController::class, 'store']);
 
 //    Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])
 //                ->name('password.request');
