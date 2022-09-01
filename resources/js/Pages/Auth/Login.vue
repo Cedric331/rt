@@ -25,19 +25,19 @@
                         <div class="mt-8">
                             <form @submit.prevent="submit">
                                 <div class="relative mt-5">
-                                    <input id="email" type="email" class="block rounded-t-lg px-2.5 pb-2.5 pt-5 w-full text-sm bg-gray-50 dark:bg-gray-700 border-0 border-b-2 border-gray-300 appearance-none text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " v-model="form.email" required autocomplete="username"/>
-                                    <label for="email" class="absolute text-sm text-white duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] left-2.5 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4">Email</label>
+                                    <input id="email" type="email" class="block rounded-t-lg px-2.5 pb-2.5 pt-5 w-full text-sm bg-gray-700 border-0 border-b-2 appearance-none text-white border-gray-600 focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " v-model="form.email" required autocomplete="username"/>
+                                    <label for="email" class="absolute text-sm duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] left-2.5 peer-focus:text-blue-600 peer-focus:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4">Email</label>
                                 </div>
 
                                 <div class="relative mt-5">
-                                    <input id="password" type="password" class="block rounded-t-lg px-2.5 pb-2.5 pt-5 w-full text-sm bg-gray-50 dark:bg-gray-700 border-0 border-b-2 border-gray-300 appearance-none text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " v-model="form.password"  required autocomplete="current-password"/>
-                                    <label for="password" class="absolute text-sm text-white duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] left-2.5 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4">Mot de passe</label>
+                                    <input id="password" type="password" class="block rounded-t-lg px-2.5 pb-2.5 pt-5 w-full text-sm bg-gray-700 border-0 border-b-2 appearance-none text-white border-gray-600 focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " v-model="form.password"  required autocomplete="current-password"/>
+                                    <label for="password" class="absolute text-sm duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] left-2.5 peer-focus:text-blue-600 peer-focus:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4">Mot de passe</label>
                                 </div>
 
                                 <div class="block mt-4">
                                     <label class="flex items-center">
                                         <input type="checkbox" :value="form.remember" v-model="form.remember"  class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                                        <span class="ml-2 text-sm text-gray-600 text-white">Se souvenir de moi</span>
+                                        <span class="ml-2 text-sm text-gray-600">Se souvenir de moi</span>
                                     </label>
                                 </div>
 

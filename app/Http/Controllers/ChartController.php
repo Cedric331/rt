@@ -13,8 +13,6 @@ class ChartController extends Controller
      */
     public function resfreshChart (): \Illuminate\Http\JsonResponse
     {
-        $user = User::find(Auth::id());
-        $user->assignRole('admin');
         return response()->json(User::select('name', 'use_rt')->get());
     }
 

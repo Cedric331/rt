@@ -49,7 +49,9 @@ class SearchController extends Controller
                         }
                     });
                 });
-            })->get();
+            })
+            ->orderBy('rating', 'DESC')
+            ->get();
 
         return response()->json($search);
     }

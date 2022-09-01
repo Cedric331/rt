@@ -1,5 +1,5 @@
 <template>
-    <Head title="Tableau de bord" />
+    <Head title="RT Gujan" />
 
     <BreezeAuthenticatedLayout class="relative">
         <template #header>
@@ -125,6 +125,7 @@ export default {
             openChart: false,
             openTeam: false,
             dataRt: null,
+            readText: '',
             resetSearch: 0,
             responses: this.$page.props.responseTypes,
             saveResponse: this.$page.props.responseTypes,
@@ -179,27 +180,41 @@ export default {
                 this.responses = this.$page.props.responseTypes
             }
         },
-         copyText (data) {
+        traitementText (data) {
             const text = data.contenu.split('\n')
             let textFormated = ''
             text.forEach(line => {
-                textFormated += line + '\n\n'
+                textFormated += line + '\n'
             })
-             navigator.clipboard.writeText(textFormated)
+            return textFormated
+        },
+         copyText (data) {
+            const text = this.traitementText(data)
+            if (this.readText !== text) {
+                this.readText = text
+                navigator.clipboard.writeText(text)
 
-             axios.put('response/rating', {
-                 id: data.id
-             })
-             .then(() => {
-                 this.$notify({
-                     title: "Copie effectuée avec succès",
-                     type: 'success',
-                     duration: 3000,
-                 });
-             })
-             .catch(error => {
-                 console.log(error)
-             })
+                axios.put('response/rating', {
+                    id: data.id
+                })
+                    .then(() => {
+                        this.$notify({
+                            title: "Copie effectuée avec succès",
+                            type: 'success',
+                            duration: 3000,
+                        });
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    })
+            } else {
+                navigator.clipboard.writeText(this.readText)
+                this.$notify({
+                    title: "Copie effectuée avec succès",
+                    type: 'success',
+                    duration: 3000,
+                });
+            }
         },
         search (data, bool) {
             if (bool) {
