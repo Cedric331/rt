@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\RatingJob;
 use App\Models\ResponseType;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -91,13 +92,7 @@ class ResponseTypeController extends Controller
      */
     public function addRating (Request $request): bool
     {
-        $user = User::find(Auth::id());
-        $user->increment('use_rt');
-        $user->save();
-
-        $response = ResponseType::find($request->id);
-        $response->rating++;
-        $response->save();
+        RatingJob::dispatch($request->id, $request->user()->id);
 
         return true;
     }

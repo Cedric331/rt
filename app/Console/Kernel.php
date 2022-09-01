@@ -7,6 +7,14 @@ use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 class Kernel extends ConsoleKernel
 {
+
+    protected function scheduleRunsHourly(Schedule $schedule)
+    {
+        foreach ($schedule->events() as $event) {
+            $event->expression = substr_replace($event->expression, '*', 0, 1);
+        }
+    }
+
     /**
      * Define the application's command schedule.
      *
@@ -16,6 +24,9 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
+        $schedule->command('queue:work')->daily();
+
+        $this->scheduleRunsHourly($schedule);
     }
 
     /**

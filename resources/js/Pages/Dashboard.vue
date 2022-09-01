@@ -7,8 +7,7 @@
                 <NavBar class="fixed z-10"
                         @search="(data, bool) => search(data, bool)"
                         @openChart="this.openChart = true"
-                        @openTeam="this.openTeam = true"
-                        :resetSearch="resetSearch">
+                        @openTeam="this.openTeam = true">
                 </NavBar>
             </div>
         </template>
@@ -126,7 +125,6 @@ export default {
             openTeam: false,
             dataRt: null,
             readText: '',
-            resetSearch: 0,
             responses: this.$page.props.responseTypes,
             saveResponse: this.$page.props.responseTypes,
             response: null,
@@ -170,8 +168,6 @@ export default {
             })
         },
         updateResponse (data = null) {
-            console.log(data)
-            this.resetSearch++
             if (data) {
                 this.responses = data
                 this.saveResponse = data
@@ -194,15 +190,16 @@ export default {
                 this.readText = text
                 navigator.clipboard.writeText(text)
 
+                this.$notify({
+                    title: "Copie effectuée avec succès",
+                    type: 'success',
+                    duration: 3000,
+                });
+
                 axios.put('response/rating', {
                     id: data.id
                 })
                     .then(() => {
-                        this.$notify({
-                            title: "Copie effectuée avec succès",
-                            type: 'success',
-                            duration: 3000,
-                        });
                     })
                     .catch(error => {
                         console.log(error)
