@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ResponseTypeResource;
 use App\Jobs\RatingJob;
 use App\Models\ResponseType;
-use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class ResponseTypeController extends Controller
@@ -42,7 +41,9 @@ class ResponseTypeController extends Controller
                 ]);
             }
         }
-        return response()->json(ResponseType::with('tags')->find($response->id));
+
+        return response()->json(new ResponseTypeResource(ResponseType::with('tags')->find([$response->id])));
+
     }
 
     /**
@@ -72,7 +73,8 @@ class ResponseTypeController extends Controller
                 ]);
             }
         }
-        return response()->json(ResponseType::with('tags')->find($responseType->id));
+
+        return response()->json(new ResponseTypeResource(ResponseType::with('tags')->find([$responseType->id])));
     }
 
     /**

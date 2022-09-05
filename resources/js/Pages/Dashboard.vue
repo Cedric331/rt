@@ -125,8 +125,9 @@ export default {
             openTeam: false,
             dataRt: null,
             readText: '',
-            responses: this.$page.props.responseTypes,
-            saveResponse: this.$page.props.responseTypes,
+            responses: this.$page.props.responseTypes.data,
+            saveResponse: this.$page.props.responseTypes.data,
+            newResponse: [],
             response: null,
             parent_id: null
         }
@@ -214,8 +215,34 @@ export default {
             }
         },
         search (data, bool) {
-            if (bool) {
-                this.responses = data
+            this.responses = this.saveResponse
+            this.newResponse = []
+            if (bool && data) {
+                const texte = data.trim()
+                const words = texte.split(' ')
+                    if (words.length > 1) {
+                        this.saveResponse.forEach(item => {
+                            words.forEach(text => {
+                                if (item.itemSearch.toString().match(text.toLowerCase())) {
+                                    this.newResponse.push(item)
+                                }
+                            })
+                        })
+                        words.forEach(text => {
+                            this.newResponse = this.newResponse.filter(item => item.itemSearch.toString().match(text.toLowerCase()))
+                        })
+                        this.newResponse = this.newResponse.filter((element, index) => {
+                            return this.newResponse.indexOf(element) === index;
+                        });
+                    } else {
+                        this.saveResponse.forEach(item => {
+                            if (item.itemSearch.toString().match(texte.toLowerCase()) ) {
+                                this.newResponse.push(item)
+                            }
+                        })
+                    }
+                this.responses = this.newResponse
+                this.newResponse = []
             } else {
                 this.responses = this.saveResponse
             }
@@ -223,13 +250,13 @@ export default {
         addRT (data, isUpdate) {
             if (data && isUpdate) {
                 this.responses.forEach((item, index) => {
-                    if (item.id === data.id) {
-                        this.responses[index] = data
+                    if (item.id === data[0].id) {
+                        this.responses[index] = data[0]
                     }
                 })
             }
             if (data && !isUpdate) {
-                this.responses.push(data)
+                this.responses.push(data[0])
             }
             this.openModal = false
             this.response = null

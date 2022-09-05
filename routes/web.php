@@ -21,6 +21,5 @@ Route::get('/', function () {
 
 require __DIR__.'/auth.php';
 require __DIR__.'/structure.php';
-require __DIR__.'/search.php';
 require __DIR__.'/chart.php';
 require __DIR__.'/response_type.php';

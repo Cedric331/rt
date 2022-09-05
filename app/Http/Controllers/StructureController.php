@@ -8,6 +8,12 @@ use Illuminate\Http\Request;
 
 class StructureController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('admin')->only('delete');
+    }
+
     /**
      * @return \Illuminate\Http\JsonResponse
      */
