@@ -1,10 +1,13 @@
 <template>
     <Head title="RT Gujan" />
+    <VideoComponent :src="urlVideo" :key="keyComponent"></VideoComponent>
 
     <BreezeAuthenticatedLayout class="relative">
+
         <template #header>
             <div>
                 <NavBar class="fixed z-10"
+                        @refreshBackground="this.refreshVideo()"
                         @search="(data, bool) => search(data, bool)"
                         @openChart="this.openChart = true"
                         @openTeam="this.openTeam = true">
@@ -13,12 +16,10 @@
         </template>
 
         <div class="-order-1 flex max-h-[54rem] z-20">
-
             <NavBarL class="fixed top-0 z-20"
                      @updateResponse="(data) => updateResponse(data)"
                      @parent="(data) => this.parent_id = data">
             </NavBarL>
-
             <section class="text-white w-9/12 absolute left-80 top-16">
                 <div class="container px-5 py-5 mx-auto">
                     <div class="flex flex-wrap -m-4">
@@ -105,6 +106,7 @@ import ModalCreateResponse from "@/Components/Modals/ModalCreateResponse.vue";
 import ModalConfirm from "@/Components/Modals/ModalConfirm.vue";
 import ModalChart from "@/Components/Modals/ModalChart.vue";
 import ModalTeam from "@/Components/Modals/ModalTeam.vue";
+import VideoComponent from "@/Components/VideoComponent.vue";
 
 export default {
     components: {
@@ -115,6 +117,7 @@ export default {
         NavBarL,
         NavBar,
         ModalChart,
+        VideoComponent,
         Head
     },
     data () {
@@ -129,10 +132,19 @@ export default {
             saveResponse: this.$page.props.responseTypes.data,
             newResponse: [],
             response: null,
+            urlVideo: 'storage/video/background'+ Math.floor(Math.random() * 8) +'.mp4',
+            keyComponent: 0,
             parent_id: null
         }
     },
     methods: {
+        refreshPage () {
+            Inertia.reload({ only: ['users'] })
+        },
+        refreshVideo () {
+            this.urlVideo = 'storage/video/background'+ Math.floor(Math.random() * 8)+'.mp4'
+            this.keyComponent++
+        },
         openModalRt () {
             this.response = null
             this.openModal = true
@@ -221,7 +233,7 @@ export default {
                 const texte = data.trim()
                 const words = texte.split(' ')
                     if (words.length > 1) {
-                        this.saveResponse.forEach(item => {
+                        this.$page.props.responseTypes.data.forEach(item => {
                             words.forEach(text => {
                                 if (item.itemSearch.toString().match(text.toLowerCase())) {
                                     this.newResponse.push(item)
@@ -235,7 +247,7 @@ export default {
                             return this.newResponse.indexOf(element) === index;
                         });
                     } else {
-                        this.saveResponse.forEach(item => {
+                        this.$page.props.responseTypes.data.forEach(item => {
                             if (item.itemSearch.toString().match(texte.toLowerCase()) ) {
                                 this.newResponse.push(item)
                             }
@@ -261,6 +273,6 @@ export default {
             this.openModal = false
             this.response = null
         }
-    },
+    }
 }
 </script>

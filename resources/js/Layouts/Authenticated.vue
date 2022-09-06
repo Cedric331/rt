@@ -11,7 +11,6 @@ const showingNavigationDropdown = ref(false);
 
 <template>
     <notifications position="bottom right" />
-
     <div>
         <div class="min-h-screen  flex flex-col">
 
@@ -22,7 +21,6 @@ const showingNavigationDropdown = ref(false);
                 </div>
             </header>
 
-            <!-- Page Content -->
             <main class="flex-1">
                 <slot />
             </main>

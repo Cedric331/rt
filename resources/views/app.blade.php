@@ -15,9 +15,9 @@
         @inertiaHead
     </head>
     <body class="font-sans antialiased">
-    <video autoplay muted loop>
-        <source src="{{ asset('storage/video/background'.rand(1,9).'.mp4') }}" type="video/mp4">
-    </video>
+{{--    <video autoplay muted loop>--}}
+{{--        <source src="{{ asset('storage/video/background'.rand(1,9).'.mp4') }}" type="video/mp4">--}}
+{{--    </video>--}}
         @inertia
     </body>
 </html>
