@@ -18,7 +18,7 @@ class ResponseTypeController extends Controller
     public function store (Request $request): \Illuminate\Http\JsonResponse
     {
         $validator = Validator::make($request->all(), [
-            'titre' => 'required|max:50|string',
+            'titre' => 'required|max:100|string',
             'contenu' => 'required|string',
             'tags' => 'nullable|string'
         ]);

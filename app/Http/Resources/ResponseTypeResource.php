@@ -43,8 +43,24 @@ class ResponseTypeResource extends ResourceCollection
              foreach ($titres as $titre) {
                  $caracSpeciaux = array("(", ")", "@", ":", "-", "_", "!", ".", "#", "+", "*", ",", "?", "/", "{", "}", "=", "~");
                  $texte = str_replace($caracSpeciaux, "", $titre);
-                 $texteStrtr= strtr($texte, "ÀÁÂàÄÅàáâàäåÒÓÔÕÖØòóôõöøÈÉÊËèéêëÇçÌÍÎÏ" . "ìíîïÙÚÛÜùúûüÿÑñ", "aaaaaaaaaaaaooooooooooooeeeeeeeecciiiiiiiiuuuuuuuuynn");
-                 array_push($array, strtolower(mb_convert_encoding($texteStrtr, 'UTF-8', 'UTF-8')));
+//                 $texteStrtr = str_replace(array("È","É","Ê","Ë","è","é","ê","ë"), 'e', $texte);
+//                 $texteStrtr = str_replace(array("À","Á","Â","à","Ä","Å","à","á","â","à","ä","å"), 'a', $texteStrtr);
+//                 $texteStrtr = str_replace(array("Ò","Ó","Ô","Õ","Ö","Ø","ò","ó","ô","õ","ö"), 'o', $texteStrtr);
+//                 $texteStrtr = str_replace(array("Ì","Í","Î","Ï","ì","í","î","ï"), 'i', $texteStrtr);
+//                 $texteStrtr = str_replace(array("Ù","Ú","Û","Ü","ù","ú","û","ü"), 'u', $texteStrtr);
+                 $table = array(
+                     'Š'=>'S', 'š'=>'s', 'Đ'=>'Dj', 'đ'=>'dj', 'Ž'=>'Z', 'ž'=>'z', 'Č'=>'C', 'č'=>'c', 'Ć'=>'C', 'ć'=>'c',
+                     'À'=>'A', 'Á'=>'A', 'Â'=>'A', 'Ã'=>'A', 'Ä'=>'A', 'Å'=>'A', 'Æ'=>'A', 'Ç'=>'C', 'È'=>'E', 'É'=>'E',
+                     'Ê'=>'E', 'Ë'=>'E', 'Ì'=>'I', 'Í'=>'I', 'Î'=>'I', 'Ï'=>'I', 'Ñ'=>'N', 'Ò'=>'O', 'Ó'=>'O', 'Ô'=>'O',
+                     'Õ'=>'O', 'Ö'=>'O', 'Ø'=>'O', 'Ù'=>'U', 'Ú'=>'U', 'Û'=>'U', 'Ü'=>'U', 'Ý'=>'Y', 'Þ'=>'B', 'ß'=>'Ss',
+                     'à'=>'a', 'á'=>'a', 'â'=>'a', 'ã'=>'a', 'ä'=>'a', 'å'=>'a', 'æ'=>'a', 'ç'=>'c', 'è'=>'e', 'é'=>'e',
+                     'ê'=>'e', 'ë'=>'e', 'ì'=>'i', 'í'=>'i', 'î'=>'i', 'ï'=>'i', 'ð'=>'o', 'ñ'=>'n', 'ò'=>'o', 'ó'=>'o',
+                     'ô'=>'o', 'õ'=>'o', 'ö'=>'o', 'ø'=>'o', 'ù'=>'u', 'ú'=>'u', 'û'=>'u', 'ý'=>'y', 'ý'=>'y', 'þ'=>'b',
+                     'ÿ'=>'y', 'Ŕ'=>'R', 'ŕ'=>'r',
+                 );
+
+                 $texteStrtr = strtr($texte, $table);
+                 array_push($array, strtolower(mb_convert_encoding($texteStrtr, 'UTF-8')));
              }
 
         return $array;

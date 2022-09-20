@@ -3,7 +3,7 @@
         <div class="bg-slate-800">
             <div class="transition ease-in-out delay-4000 w-72 overflow-hidden">
                 <div class="flex h-screen flex-col justify-between pt-2">
-                    <div class="min-h-[60%] max-h-[60%]">
+                    <div class="min-h-[70%] max-h-[70%]">
                         <div class="hover:overflow-y-auto overflow-hidden h-full scroller">
                             <ul class="space-y-2 tracking-wide">
                                 <li v-for="structure in this.structures" class="flex justify-between">
@@ -30,8 +30,11 @@
                         </div>
                         <hr class="bg-white">
                     </div>
-                    <div class="min-h-[40%] max-h-[40%] mt-3">
+                    <div class="min-h-[30%] max-h-[30%] mt-3">
                         <ul class="tracking-wide">
+                            <li class="min-w-max">
+                                <span class="-mr-1 font-medium">{{ structureActif }}</span>
+                            </li>
                             <li class="min-w-max flex justify-center" v-if="this.parent_id !== null">
                                 <button @click="retour()" class="relative items-center rounded-full space-x-1 hover:bg-gradient-to-r from-sky-600 to-cyan-400 px-2 py-1 text-white">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
@@ -91,6 +94,8 @@
             return {
             structures: [],
             structure: null,
+            structureActif: '',
+            structureOld: '',
             delStructure: null,
             parent_id: null,
             openModal: false,
@@ -194,6 +199,7 @@
                 })
         },
         reset () {
+            this.structureActif = ''
             this.parent_id = null
             axios.get('structure')
             .then(response => {

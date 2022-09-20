@@ -58,6 +58,7 @@ export default {
        return listeTag
       },
         save () {
+            this.notifmsg = ''
             axios.post('response', {
                 titre: this.titre,
                 contenu: this.contenu,
