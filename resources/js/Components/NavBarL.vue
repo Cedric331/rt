@@ -32,19 +32,22 @@
                     </div>
                     <div class="min-h-[30%] max-h-[30%] mt-3">
                         <ul class="tracking-wide">
-                            <li class="min-w-max">
-                                <span class="-mr-1 font-medium">{{ structureActif }}</span>
-                            </li>
                             <li class="min-w-max flex justify-center" v-if="this.parent_id !== null">
                                 <button @click="retour()" class="relative items-center rounded-full space-x-1 hover:bg-gradient-to-r from-sky-600 to-cyan-400 px-2 py-1 text-white">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
-                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.707-10.293a1 1 0 00-1.414-1.414l-3 3a1 1 0 000 1.414l3 3a1 1 0 001.414-1.414L9.414 11H13a1 1 0 100-2H9.414l1.293-1.293z" clip-rule="evenodd" />
-                                    </svg>
+                                    <div class="flex justify-between">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.707-10.293a1 1 0 00-1.414-1.414l-3 3a1 1 0 000 1.414l3 3a1 1 0 001.414-1.414L9.414 11H13a1 1 0 100-2H9.414l1.293-1.293z" clip-rule="evenodd" />
+                                        </svg>
+                                        <span class="font-bold">Revenir </span>
+                                    </div>
                                 </button>
                                 <button @click="reset()" class="relative items-center rounded-full space-x-1 hover:bg-gradient-to-r from-sky-600 to-cyan-400 px-2 py-1 text-white">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
-                                        <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
-                                    </svg>
+                                    <div class="flex justify-between">
+                                        <span class="font-bold">Home </span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
+                                            <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+                                        </svg>
+                                    </div>
                                 </button>
                             </li>
                             <li class="min-w-max">
@@ -94,8 +97,6 @@
             return {
             structures: [],
             structure: null,
-            structureActif: '',
-            structureOld: '',
             delStructure: null,
             parent_id: null,
             openModal: false,
@@ -199,7 +200,6 @@
                 })
         },
         reset () {
-            this.structureActif = ''
             this.parent_id = null
             axios.get('structure')
             .then(response => {

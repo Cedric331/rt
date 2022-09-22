@@ -226,6 +226,16 @@ export default {
                 });
             }
         },
+        filterSearch (data) {
+            let b = "áàâäãåçéèêëíïîìñóòôöõúùûüýÁÀÂÄÃÅÇÉÈÊËÍÏÎÌÑÓÒÔÖÕÚÙÛÜÝ",
+                c = "aaaaaaceeeeiiiinooooouuuuyAAAAAACEEEEIIIINOOOOOUUUUY",
+                string = "";
+            for(let i = 0, j = data.length; i < j; i++) {
+                var e = data.substr(i, 1);
+                string += (b.indexOf(e) !== -1) ? c.substr(b.indexOf(e), 1) : e;
+            }
+            return string;
+        },
         search (data, bool) {
             this.responses = this.saveResponse
             this.newResponse = []
@@ -235,20 +245,23 @@ export default {
                     if (words.length > 1) {
                         this.$page.props.responseTypes.data.forEach(item => {
                             words.forEach(text => {
-                                if (item.itemSearch.toString().match(text.toLowerCase())) {
+                                let word = this.filterSearch(text)
+                                if (item.itemSearch.toString().match(word.toLowerCase())) {
                                     this.newResponse.push(item)
                                 }
                             })
                         })
                         words.forEach(text => {
-                            this.newResponse = this.newResponse.filter(item => item.itemSearch.toString().match(text.toLowerCase()))
+                            let word = this.filterSearch(text)
+                            this.newResponse = this.newResponse.filter(item => item.itemSearch.toString().match(word.toLowerCase()))
                         })
                         this.newResponse = this.newResponse.filter((element, index) => {
                             return this.newResponse.indexOf(element) === index;
                         });
                     } else {
+                        let word = this.filterSearch(texte)
                         this.$page.props.responseTypes.data.forEach(item => {
-                            if (item.itemSearch.toString().match(texte.toLowerCase()) ) {
+                            if (item.itemSearch.toString().match(word.toLowerCase()) ) {
                                 this.newResponse.push(item)
                             }
                         })
