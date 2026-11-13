@@ -87,7 +87,7 @@
 <script>
 
 import ModalUpdatePassword from "@/Components/Modals/ModalUpdatePassword.vue";
-import {Link} from "@inertiajs/inertia-vue3";
+import {Link} from "@inertiajs/vue3";
 
 export default {
     name: "NavBar",

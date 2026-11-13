@@ -97,9 +97,8 @@
 
 
 <script>
-import {Inertia} from "@inertiajs/inertia";
+import { router, Head } from '@inertiajs/vue3';
 import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
-import { Head } from '@inertiajs/inertia-vue3';
 import NavBar from "@/Components/NavBar.vue";
 import NavBarL from "@/Components/NavBarL.vue";
 import ModalCreateResponse from "@/Components/Modals/ModalCreateResponse.vue";
@@ -139,7 +138,7 @@ export default {
     },
     methods: {
         refreshPage () {
-            Inertia.reload({ only: ['users'] })
+            router.reload({ only: ['users'] })
         },
         refreshVideo () {
             this.urlVideo = 'storage/video/background'+ Math.floor(Math.random() * 8)+'.mp4'
@@ -180,15 +179,15 @@ export default {
                 this.confirmDelete = false
             })
         },
-        updateResponse (data = null) {
-            if (data) {
-                this.responses = data
-                this.saveResponse = data
-            } else {
-                Inertia.reload()
-                this.responses = this.$page.props.responseTypes
-            }
-        },
+            updateResponse (data = null) {
+                if (data) {
+                    this.responses = data
+                    this.saveResponse = data
+                } else {
+                    router.reload()
+                    this.responses = this.$page.props.responseTypes
+                }
+            },
         traitementText (data) {
             const text = data.contenu.split('\n')
             let textFormated = ''

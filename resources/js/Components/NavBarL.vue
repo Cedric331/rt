@@ -81,9 +81,8 @@
 
 
 <script>
-    import {Inertia} from "@inertiajs/inertia";
     import ModalStructure from "@/Components/Modals/ModalStructure.vue";
-    import {Link} from "@inertiajs/inertia-vue3";
+    import {Link} from "@inertiajs/vue3";
     import ModalConfirm from "@/Components/Modals/ModalConfirm.vue";
 
     export default {
